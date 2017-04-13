@@ -1,8 +1,11 @@
 buildscript {
-    repositories { jcenter() }
+    repositories {
+        jcenter()
+        flatDir dirs: "../plugin/build/libs"
+    }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
-        classpath 'org.stoyicker.android-check:plugin:+'
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'org.stoyicker.android-check:plugin:3.167'
     }
 }
 

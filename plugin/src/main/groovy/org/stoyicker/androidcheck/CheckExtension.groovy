@@ -25,16 +25,11 @@ class CheckExtension {
 
     void pmd(Action<PmdConfig> action) { action.execute(pmd) }
 
-    LintConfig lint
-
-    void lint(Action<LintConfig> action) { action.execute(lint) }
-
     CheckExtension(Project project) {
         this.project = project
         this.checkstyle = new CheckstyleConfig(project)
         this.findbugs = new FindbugsConfig(project)
         this.pmd = new PmdConfig(project)
-        this.lint = new LintConfig(project)
     }
 
     boolean skip = false
@@ -44,5 +39,47 @@ class CheckExtension {
     boolean abortOnError = true
 
     void abortOnError(boolean abortOnError) { this.abortOnError = abortOnError }
+
+    static class Lint {
+        boolean absolutePaths
+
+        Set<String> check
+
+        boolean checkAllWarnings
+
+        boolean checkReleaseBuilds
+
+        Set<String> disable
+
+        Set<String> enable
+
+        boolean explainIssues
+
+        File htmlOutput
+
+        boolean htmlReport
+
+        boolean ignoreWarnings
+
+        File lintConfig
+
+        boolean noLines
+
+        boolean quiet
+
+        Map<String, Integer> severityOverrides
+
+        boolean showAll
+
+        File textOutput
+
+        boolean textReport
+
+        boolean warningsAsErrors
+
+        File xmlOutput
+
+        boolean xmlReport
+    }
 
 }
