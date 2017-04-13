@@ -2,6 +2,7 @@ package org.stoyicker.androidcheck
 
 import org.stoyicker.androidcheck.checkstyle.CheckstyleConfig
 import org.stoyicker.androidcheck.findbugs.FindbugsConfig
+import org.stoyicker.androidcheck.lint.LintConfig
 import org.stoyicker.androidcheck.pmd.PmdConfig
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -24,11 +25,16 @@ class CheckExtension {
 
     void pmd(Action<PmdConfig> action) { action.execute(pmd) }
 
+    LintConfig lint
+
+    void lint(Action<LintConfig> action) { action.execute(lint) }
+
     CheckExtension(Project project) {
         this.project = project
         this.checkstyle = new CheckstyleConfig(project)
         this.findbugs = new FindbugsConfig(project)
         this.pmd = new PmdConfig(project)
+        this.lint = new LintConfig(project)
     }
 
     boolean skip = false
