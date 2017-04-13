@@ -5,16 +5,16 @@ repositories { jcenter() }
 dependencies {
     compile gradleApi()
     // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:7.6') {
+    compile('com.puppycrawl.tools:checkstyle:7.6.1') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
     // FindBugs
     compile 'com.google.code.findbugs:findbugs:3.0.1'
     // PMD
-    compile 'net.sourceforge.pmd:pmd-java:5.5.4'
+    compile 'net.sourceforge.pmd:pmd-java:5.5.5'
     //Lint
-    compile 'com.android.tools.build:gradle:2.2.3'
+    compile 'com.android.tools.build:gradle:2.3.0'
 }
 
 def masterCommitCount = 'git rev-list --count HEAD'.execute([], project.rootDir).text.trim()
@@ -27,7 +27,8 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'org.stoyicker.android-check'
     artifactId = 'plugin'
-    version = "2.$masterCommitCount"
+    version = "3.$masterCommitCount"
+    println("Version: " + version)
     website = 'https://github.com/stoyicker/android-check-2'
     scm = 'https://github.com/stoyicker/android-check-2'
     tags = ['android', 'plugin', 'check', 'checkstyle', 'findbugs', 'pmd']
