@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ruleset name="android-check-2"
-    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+<!--
+PMD Configuration
+Severity: HARD
+-->
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ruleset"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd">
 
     <description>POM rule set file</description>
 
     <rule ref="rulesets/java/android.xml" />
 
-    <rule ref="rulesets/java/basic.xml">
-        <exclude name="CollapsibleIfStatements" />
-    </rule>
+    <rule ref="rulesets/java/basic.xml" />
 
-    <rule ref="rulesets/java/braces.xml">
-        <exclude name="IfStmtsMustUseBraces" />
-        <exclude name="IfElseStmtsMustUseBraces" />
-    </rule>
+    <rule ref="rulesets/java/braces.xml" />
 
     <rule ref="rulesets/java/clone.xml" />
 
-    <rule ref="rulesets/java/codesize.xml">
-        <exclude name="StdCyclomaticComplexity" />
-        <exclude name="ModifiedCyclomaticComplexity" />
-    </rule>
+    <rule ref="rulesets/java/codesize.xml" />
     <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
         <properties>
             <property name="reportLevel" value="20" />
@@ -36,7 +33,6 @@
 
     <rule ref="rulesets/java/comments.xml">
         <exclude name="CommentRequired" />
-        <exclude name="CommentSize" />
     </rule>
 
     <rule ref="rulesets/java/controversial.xml">
@@ -48,11 +44,9 @@
         <exclude name="DataflowAnomalyAnalysis" />
         <exclude name="NullAssignment" />
         <exclude name="OnlyOneReturn" />
-        <exclude name="DefaultPackage" />
     </rule>
 
     <rule ref="rulesets/java/coupling.xml">
-        <exclude name="LooseCoupling" />
         <exclude name="ExcessiveImports" />
         <exclude name="LawOfDemeter" />
         <exclude name="LoosePackageCoupling" />
@@ -65,11 +59,6 @@
         <exclude name="SwitchStmtsShouldHaveDefault" />
         <!-- Android listeners contain a lot of such switch statements -->
         <exclude name="TooFewBranchesForASwitchStatement" />
-        <exclude name="ImmutableField" />
-        <exclude name="GodClass" />
-        <exclude name="SingularField" />
-        <exclude name="UncommentedEmptyMethodBody" />
-        <exclude name="EmptyMethodInAbstractClassShouldBeAbstract" />
     </rule>
 
     <rule ref="rulesets/java/empty.xml" />
@@ -92,24 +81,18 @@
 
     <rule ref="rulesets/java/naming.xml">
         <exclude name="AbstractNaming" />
-        <exclude name="AvoidFieldNameMatchingMethodName" />
         <exclude name="LongVariable" />
         <exclude name="ShortClassName" />
-        <exclude name="SuspiciousConstantFieldName" />
         <exclude name="ShortVariable" />
-        <exclude name="VariableNamingConventions" />
     </rule>
 
     <rule ref="rulesets/java/optimizations.xml">
         <exclude name="AvoidInstantiatingObjectsInLoops" />
         <exclude name="LocalVariableCouldBeFinal" />
         <exclude name="MethodArgumentCouldBeFinal" />
-        <exclude name="RedundantFieldInitializer" />
     </rule>
 
-    <rule ref="rulesets/java/strictexception.xml">
-        <exclude name="AvoidCatchingGenericException" />
-    </rule>
+    <rule ref="rulesets/java/strictexception.xml" />
 
     <rule ref="rulesets/java/strings.xml" />
 
@@ -117,13 +100,8 @@
         <exclude name="LooseCoupling" />
     </rule>
 
-    <rule ref="rulesets/java/unnecessary.xml">
-        <exclude name="UselessOverridingMethod" />
-        <exclude name="UselessParentheses" />
-    </rule>
+    <rule ref="rulesets/java/unnecessary.xml" />
 
-    <rule ref="rulesets/java/unusedcode.xml">
-        <exclude name="UnusedModifier" />
-    </rule>
+    <rule ref="rulesets/java/unusedcode.xml" />
 
 </ruleset>
