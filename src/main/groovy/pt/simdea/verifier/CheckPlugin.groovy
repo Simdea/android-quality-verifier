@@ -1,10 +1,10 @@
-package org.stoyicker.androidcheck
+package pt.simdea.verifier
 
-import org.stoyicker.androidcheck.checkstyle.CheckstyleCheck
-import org.stoyicker.androidcheck.findbugs.FindbugsCheck
-import org.stoyicker.androidcheck.pmd.PmdCheck
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import pt.simdea.verifier.checkstyle.CheckstyleCheck
+import pt.simdea.verifier.findbugs.FindbugsCheck
+import pt.simdea.verifier.pmd.PmdCheck
 
 class CheckPlugin implements Plugin<Project> {
 

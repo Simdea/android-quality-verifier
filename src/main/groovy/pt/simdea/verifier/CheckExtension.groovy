@@ -1,10 +1,10 @@
-package org.stoyicker.androidcheck
+package pt.simdea.verifier
 
-import org.stoyicker.androidcheck.checkstyle.CheckstyleConfig
-import org.stoyicker.androidcheck.findbugs.FindbugsConfig
-import org.stoyicker.androidcheck.pmd.PmdConfig
 import org.gradle.api.Action
 import org.gradle.api.Project
+import pt.simdea.verifier.checkstyle.CheckstyleConfig
+import pt.simdea.verifier.findbugs.FindbugsConfig
+import pt.simdea.verifier.pmd.PmdConfig
 
 class CheckExtension {
 

@@ -1,14 +1,14 @@
-package org.stoyicker.androidcheck.checkstyle
+package pt.simdea.verifier.checkstyle
 
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.Formatter
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.FormatterType
 import groovy.util.slurpersupport.GPathResult
-import org.stoyicker.androidcheck.CheckExtension
-import org.stoyicker.androidcheck.CommonCheck
-import org.stoyicker.androidcheck.CommonConfig
 import org.gradle.api.Project
-import org.stoyicker.androidcheck.Utils
+import pt.simdea.verifier.CheckExtension
+import pt.simdea.verifier.CommonCheck
+import pt.simdea.verifier.CommonConfig
+import pt.simdea.verifier.Utils
 
 class CheckstyleCheck extends CommonCheck {
 

@@ -1,13 +1,13 @@
-package org.stoyicker.androidcheck.findbugs
+package pt.simdea.verifier.findbugs
 
 import edu.umd.cs.findbugs.anttask.FindBugsTask
 import groovy.util.slurpersupport.GPathResult
-import org.stoyicker.androidcheck.CheckExtension
-import org.stoyicker.androidcheck.CommonCheck
-import org.stoyicker.androidcheck.CommonConfig
 import org.apache.tools.ant.types.FileSet
 import org.apache.tools.ant.types.Path
 import org.gradle.api.Project
+import pt.simdea.verifier.CheckExtension
+import pt.simdea.verifier.CommonCheck
+import pt.simdea.verifier.CommonConfig
 
 class FindbugsCheck extends CommonCheck {
 
