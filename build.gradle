@@ -13,6 +13,8 @@ dependencies {
     compile 'com.google.code.findbugs:findbugs:3.0.1'
     // PMD
     compile 'net.sourceforge.pmd:pmd-java:5.5.5'
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
+    classpath 'com.github.dcendents:android-maven-plugin:1.2'
 }
 
 project.ext {
@@ -25,4 +27,4 @@ project.ext {
     println("Version: " + version)
 }
 
-apply from: 'publish-bitbucket.gradle'
+apply from: 'deploy.gradle'
