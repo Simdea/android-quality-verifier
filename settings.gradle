@@ -1,2 +1,2 @@
-rootProject.name = 'android-check'
-
+include ':plugin', ':sample'
+rootProject.name = 'android-quality-verifier'
