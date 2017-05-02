@@ -1,14 +1,14 @@
-package org.stoyicker.androidcheck
+package pt.simdea.verifier
 
-import org.stoyicker.androidcheck.checkstyle.CheckstyleConfig
-import org.stoyicker.androidcheck.findbugs.FindbugsConfig
-import org.stoyicker.androidcheck.pmd.PmdConfig
 import org.gradle.api.Action
 import org.gradle.api.Project
+import pt.simdea.verifier.checkstyle.CheckstyleConfig
+import pt.simdea.verifier.findbugs.FindbugsConfig
+import pt.simdea.verifier.pmd.PmdConfig
 
 class CheckExtension {
 
-    static final String NAME = 'check'
+    static final String NAME = 'verifier'
 
     private final Project project
 
@@ -38,5 +38,29 @@ class CheckExtension {
     boolean abortOnError = true
 
     void abortOnError(boolean abortOnError) { this.abortOnError = abortOnError }
+
+    static class Lint {
+        boolean absolutePaths
+
+        boolean checkAllWarnings
+
+        boolean checkReleaseBuilds
+
+        File htmlOutput
+
+        boolean htmlReport
+
+        boolean ignoreWarnings
+
+        File lintConfig
+
+        boolean showAll
+
+        boolean warningsAsErrors
+
+        File xmlOutput
+
+        boolean xmlReport
+    }
 
 }

@@ -1,13 +1,14 @@
-package org.stoyicker.androidcheck.checkstyle
+package pt.simdea.verifier.checkstyle
 
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.Formatter
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.FormatterType
 import groovy.util.slurpersupport.GPathResult
-import org.stoyicker.androidcheck.CheckExtension
-import org.stoyicker.androidcheck.CommonCheck
-import org.stoyicker.androidcheck.CommonConfig
 import org.gradle.api.Project
+import pt.simdea.verifier.CheckExtension
+import pt.simdea.verifier.CommonCheck
+import pt.simdea.verifier.CommonConfig
+import pt.simdea.verifier.Utils
 
 class CheckstyleCheck extends CommonCheck {
 
@@ -24,6 +25,11 @@ class CheckstyleCheck extends CommonCheck {
         checkStyleTask.project = project.ant.antProject
         checkStyleTask.configURL = configFile.toURI().toURL()
         checkStyleTask.addFormatter(new Formatter(type: new FormatterType(value: 'xml'), tofile: xmlReportFile))
+        File file = new File(project.buildDir, "tmp/android-check/checkstyle-suppress.xml")
+        file.parentFile.mkdirs()
+        file.delete()
+        file << Utils.getResource(project, "checkstyle/suppressions.xml")
+        checkStyleTask.properties = file
 
         checkStyleTask.failOnViolation = false
 

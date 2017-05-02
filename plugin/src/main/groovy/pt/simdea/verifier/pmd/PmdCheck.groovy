@@ -1,12 +1,12 @@
-package org.stoyicker.androidcheck.pmd
+package pt.simdea.verifier.pmd
 
-import net.sourceforge.pmd.ant.Formatter
 import groovy.util.slurpersupport.GPathResult
-import org.stoyicker.androidcheck.CheckExtension
-import org.stoyicker.androidcheck.CommonCheck
-import org.stoyicker.androidcheck.CommonConfig
+import net.sourceforge.pmd.ant.Formatter
 import net.sourceforge.pmd.ant.PMDTask
 import org.gradle.api.Project
+import pt.simdea.verifier.CheckExtension
+import pt.simdea.verifier.CommonCheck
+import pt.simdea.verifier.CommonConfig
 
 class PmdCheck extends CommonCheck {
 

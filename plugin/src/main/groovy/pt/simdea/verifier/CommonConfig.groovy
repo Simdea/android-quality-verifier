@@ -1,4 +1,4 @@
-package org.stoyicker.androidcheck
+package pt.simdea.verifier
 
 import org.gradle.api.Project
 import org.gradle.api.resources.TextResource
