@@ -1,0 +1,11 @@
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'org.stoyicker.android-check:plugin:+'
+    }
+}
+
+allprojects {
+    repositories { jcenter() }
+}

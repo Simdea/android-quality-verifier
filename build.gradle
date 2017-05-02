@@ -1,30 +1,10 @@
-apply plugin: 'groovy'
-
-repositories { jcenter() }
-
-dependencies {
-    compile gradleApi()
-    // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:7.6.1') {
-        // Android Lint also depends on guava, so don't bring it in twice
-        exclude module: 'guava'
-    }
-    // FindBugs
-    compile 'com.google.code.findbugs:findbugs:3.0.1'
-    // PMD
-    compile 'net.sourceforge.pmd:pmd-java:5.5.5'
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
-    classpath 'com.github.dcendents:android-maven-plugin:1.2'
+task wrapper(type: Wrapper) {
+    group 'Build Setup'
+    description 'Initializes the Gradle Wrapper.'
+    gradleVersion = '3.2.1'
 }
 
-project.ext {
-    plugin = 'org.stoyicker.android-check'
-    name = 'Android Check Plugin 2'
-    description = 'Static code analysis plugin for Android projects.'
-    groupId = ARTIFACT_PACKAGE
-    artifactId = ARTIFACT_NAME
-    version = ARTIFACT_VERSION
-    println("Version: " + version)
+task clean(type: Delete) {
+	delete rootProject.allprojects.collect {project -> project.buildDir}
+    followSymlinks false
 }
-
-apply from: 'deploy.gradle'

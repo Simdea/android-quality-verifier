@@ -1,0 +1,70 @@
+apply plugin: 'groovy'
+
+repositories { jcenter() }
+
+dependencies {
+    compile gradleApi()
+    // Checkstyle
+    compile('com.puppycrawl.tools:checkstyle:7.6.1') {
+        // Android Lint also depends on guava, so don't bring it in twice
+        exclude module: 'guava'
+    }
+    // FindBugs
+    compile 'com.google.code.findbugs:findbugs:3.0.1'
+    // PMD
+    compile 'net.sourceforge.pmd:pmd-java:5.5.5'
+}
+
+project.ext {
+    plugin = 'pt.simdea.verifier'
+    name = 'Android Quality Verifier Plugin'
+    description = 'Static code analysis plugin for Android projects.'
+    groupId = 'pt.simdea.verifier'
+    artifactId = 'verifier'
+    version = "3.3.0"
+    website = 'https://github.com/simdea/android-quality-verifier'
+    scm = 'https://github.com/simdea/android-quality-verifier'
+    tags = ['android', 'verifier', 'check', 'checkstyle', 'findbugs', 'pmd', 'lint', 'quality']
+    pom = {
+        licenses {
+            license {
+                name 'The MIT License (MIT)'
+                url 'https://opensource.org/licenses/MIT'
+                distribution 'repo'
+            }
+        }
+        scm {
+            url project.ext.scm
+            connection 'scm:git@github.com:simdea/android-quality-verifier.git'
+            developerConnection 'scm:git@github.com:simdea/android-quality-verifier.git'
+        }
+        issueManagement {
+            system 'GitHub'
+            url "${project.ext.scm}/issues"
+        }
+        developers {
+            developer {
+                name 'Simdea'
+                url 'https://www.simdea.pt'
+                roles {
+                    role 'developer'
+                }
+            }
+        }
+    }
+    bintray = {
+        user = 'andrer757'
+        key = '6024b510d88c5c1fc86931103322362811626a3c'
+        repo = 'android-quality-verifier'
+        org = 'simdea'
+        licenses = ['MIT']
+        issueTracker = "${project.ext.scm}/issues"
+        vcs = project.ext.scm
+        sign = true
+        dryRun = false
+        publish = true
+    }
+}
+
+apply from: project.file('gradle/gradle-publish.gradle')
+apply from: project.file('gradle/publish.gradle')
