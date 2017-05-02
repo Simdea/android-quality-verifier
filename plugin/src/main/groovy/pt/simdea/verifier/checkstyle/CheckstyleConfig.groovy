@@ -1,7 +1,7 @@
-package org.stoyicker.androidcheck.checkstyle
+package pt.simdea.verifier.checkstyle
 
-import org.stoyicker.androidcheck.CommonConfig
 import org.gradle.api.Project
+import pt.simdea.verifier.CommonConfig
 
 class CheckstyleConfig extends CommonConfig {
 

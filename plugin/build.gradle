@@ -15,20 +15,16 @@ dependencies {
     compile 'net.sourceforge.pmd:pmd-java:5.5.5'
 }
 
-def masterCommitCount = 'git rev-list --count HEAD'.execute([], project.rootDir).text.trim()
-if (masterCommitCount == "") { masterCommitCount = "0" }
-masterCommitCount = Integer.parseInt(masterCommitCount) + 62
-
 project.ext {
-    plugin = 'org.stoyicker.android-check'
-    name = 'Android Check Plugin 2'
+    plugin = 'pt.simdea.verifier'
+    name = 'Android Quality Verifier Plugin'
     description = 'Static code analysis plugin for Android projects.'
-    groupId = 'org.stoyicker.android-check'
-    artifactId = 'plugin'
-    version = "2.$masterCommitCount"
-    website = 'https://github.com/stoyicker/android-check-2'
-    scm = 'https://github.com/stoyicker/android-check-2'
-    tags = ['android', 'plugin', 'check', 'checkstyle', 'findbugs', 'pmd']
+    groupId = 'pt.simdea.verifier'
+    artifactId = 'verifier'
+    version = "3.3.0"
+    website = 'https://github.com/simdea/android-quality-verifier'
+    scm = 'https://github.com/simdea/android-quality-verifier'
+    tags = ['android', 'verifier', 'check', 'checkstyle', 'findbugs', 'pmd', 'lint', 'quality']
     pom = {
         licenses {
             license {
@@ -39,8 +35,8 @@ project.ext {
         }
         scm {
             url project.ext.scm
-            connection 'scm:git@github.com:stoyicker/android-check-2.git'
-            developerConnection 'scm:git@github.com:stoyicker/android-check.git'
+            connection 'scm:git@github.com:simdea/android-quality-verifier.git'
+            developerConnection 'scm:git@github.com:simdea/android-quality-verifier.git'
         }
         issueManagement {
             system 'GitHub'
@@ -48,8 +44,8 @@ project.ext {
         }
         developers {
             developer {
-                name 'Jorge Antonio Diaz-Benito Soriano'
-                url 'https://www.linkedin.com/in/jorgediazbenitosoriano'
+                name 'Simdea'
+                url 'https://www.simdea.pt'
                 roles {
                     role 'developer'
                 }
@@ -57,12 +53,12 @@ project.ext {
         }
     }
     bintray = {
-        user = project.hasProperty('bintray.user') ? project['bintray.user'] : 'anonymous'
-        key = project.hasProperty('bintray.key') ? project['bintray.key'] : 'api-key'
-        repo = 'android-check-2'
-        org = 'stoyicker-org'
+        user = 'andrer757'
+        key = '6024b510d88c5c1fc86931103322362811626a3c'
+        repo = 'android-quality-verifier'
+        org = 'simdea'
         licenses = ['MIT']
-        issueTracker = 'https://github.com/stoyicker/android-check-2/issues'
+        issueTracker = "${project.ext.scm}/issues"
         vcs = project.ext.scm
         sign = true
         dryRun = false

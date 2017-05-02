@@ -1,7 +1,7 @@
-package org.stoyicker.androidcheck.findbugs
+package pt.simdea.verifier.findbugs
 
-import org.stoyicker.androidcheck.CommonConfig
 import org.gradle.api.Project
+import pt.simdea.verifier.CommonConfig
 
 class FindbugsConfig extends CommonConfig {
 

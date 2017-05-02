@@ -1,4 +1,4 @@
-package org.stoyicker.androidcheck
+package pt.simdea.verifier
 
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -29,8 +29,7 @@ abstract class CommonCheck<Config extends CommonConfig> {
 
     protected abstract String getErrorMessage(int errorCount, File htmlReportFile)
 
-    protected void reformatReport(Project project, File styleFile,
-                                  File xmlReportFile, File htmlReportFile) {
+    protected void reformatReport(Project project, File styleFile, File xmlReportFile, File htmlReportFile) {
         project.ant.xslt(in: xmlReportFile, out: htmlReportFile) {
             style { string(styleFile.text) }
         }
@@ -65,11 +64,11 @@ abstract class CommonCheck<Config extends CommonConfig> {
                     String errorMessage = getErrorMessage(errorCount, htmlReportFile)
                     if (abortOnError) {
                         if (Desktop.isDesktopSupported()) {
-                            Desktop.getDesktop().browse(new URI("file://"+htmlReportFile.absolutePath))
+                            Desktop.getDesktop().browse(new URI("file://" + htmlReportFile.absolutePath))
                         } else {
                             target.logger.warn "Your system does not support java.awt.Desktop. " +
-                            "Not opening report automatically. " +
-                            "See https://github.com/stoyicker/android-check-2/issues/42"
+                                    "Not opening report automatically. " +
+                                    "See https://github.com/stoyicker/android-check-2/issues/42"
                         }
                         throw new GradleException(errorMessage)
                     } else {
@@ -79,7 +78,7 @@ abstract class CommonCheck<Config extends CommonConfig> {
             }
         }
 
-        if(target.tasks.find({ it.name == 'check'}) != null) {
+        if (target.tasks.find({ it.name == 'check' }) != null) {
             target.tasks.getByName('check').dependsOn taskName
         } else {
             target.logger.warn """task check not found in project $target.name. You may need to run

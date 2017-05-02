@@ -1,7 +1,7 @@
-package org.stoyicker.androidcheck.pmd
+package pt.simdea.verifier.pmd
 
-import org.stoyicker.androidcheck.CommonConfig
 import org.gradle.api.Project
+import pt.simdea.verifier.CommonConfig
 
 class PmdConfig extends CommonConfig {
 
