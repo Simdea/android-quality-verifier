@@ -3,7 +3,7 @@ apply plugin: 'groovy'
 repositories { jcenter() }
 
 dependencies {
-    compile gradleApi()
+    compileOnly gradleApi()
     // Checkstyle
     compile('com.puppycrawl.tools:checkstyle:7.6.1') {
         // Android Lint also depends on guava, so don't bring it in twice
@@ -12,7 +12,7 @@ dependencies {
     // FindBugs
     compile 'com.google.code.findbugs:findbugs:3.0.1'
     // PMD
-    compile 'net.sourceforge.pmd:pmd-java:5.5.5'
+    compile 'net.sourceforge.pmd:pmd-java:5.6.0'
 }
 
 project.ext {
@@ -21,7 +21,7 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.3.0"
+    version = "3.3.1"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
     tags = ['android', 'verifier', 'check', 'checkstyle', 'findbugs', 'pmd', 'lint', 'quality']

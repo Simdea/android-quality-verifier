@@ -10,15 +10,16 @@ class CheckPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project target) {
-        target.extensions.create(CheckExtension.NAME, CheckExtension, target)
+        target.extensions.create(CheckExtension.NAME, CheckExtension)
         target.check.extensions.create('lint', CheckExtension.Lint)
 
-        new CheckstyleCheck().apply(target)
-        new FindbugsCheck().apply(target)
-        new PmdCheck().apply(target)
         target.subprojects { subProject ->
             afterEvaluate {
                 def extension = target.check
+
+                new CheckstyleCheck().apply(subProject)
+                new FindbugsCheck().apply(subProject)
+                new PmdCheck().apply(subProject)
 
                 addLint(subProject, extension)
             }
