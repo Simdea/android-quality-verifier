@@ -8,7 +8,7 @@ import pt.simdea.verifier.pmd.PmdConfig
 
 class CheckExtension {
 
-    static final String NAME = 'verifier'
+    static final String NAME = 'check'
 
     private final Project project
 

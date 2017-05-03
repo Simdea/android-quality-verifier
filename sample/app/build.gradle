@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.stoyicker.android-check'
+apply plugin: 'pt.simdea.verifier'
 
 android {
     compileSdkVersion 25
@@ -29,7 +29,7 @@ dependencies {
     compile 'com.github.tony19:logback-android-classic:1.1.1-4'
 }
 
-check {
+verifier {
     abortOnError true
 
     checkstyle {

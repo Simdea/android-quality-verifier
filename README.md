@@ -2,7 +2,7 @@ Android Quality Verifier
 ===============
 
 Static code analysis plugin for Android projects.
-This is a fork of [the original android-check plugin][1], which implements a really useful concept, but unfortunately seems abandoned.
+This is a fork of [the original android-check plugin][1], which implements a really useful concept.
 
 <!---
 Build status
@@ -30,7 +30,7 @@ The default one.
 
 ```
 // Configuration is completely optional, defaults will be used if not present
-verifier {
+check {
   // Do absolutely nothing, default: false
   skip true/false
   // Fails build if a violation is found, default: true
@@ -74,7 +74,7 @@ verifier {
   }
   
   // Lint configuration
-    lint {
+    alint {
       // Same options as Checkstyle and FindBugs, except for a couple of defaults:
   
       // Configuration file for CheckStyle, default: <project_path>/config/pmd.xml, if non-existent then <project_path>/<module_path>/config/pmd.xml, if non-existent then plugin/src/main/resources/pmd/conf-default.xml

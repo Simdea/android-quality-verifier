@@ -34,6 +34,7 @@ Severity: HARD
     <rule ref="rulesets/java/comments.xml">
         <exclude name="CommentRequired"/>
         <exclude name="CommentSize"/>
+        <exclude name="CommentDefaultAccessModifier"/>
     </rule>
 
     <rule ref="rulesets/java/controversial.xml">
@@ -45,6 +46,8 @@ Severity: HARD
         <exclude name="DataflowAnomalyAnalysis"/>
         <exclude name="NullAssignment"/>
         <exclude name="OnlyOneReturn"/>
+        <exclude name="AvoidFinalLocalVariable"/>
+        <exclude name="UseConcurrentHashMap"/>
     </rule>
 
     <rule ref="rulesets/java/coupling.xml">
@@ -101,7 +104,11 @@ Severity: HARD
         <exclude name="LooseCoupling"/>
     </rule>
 
-    <rule ref="rulesets/java/unnecessary.xml"/>
+    <rule ref="rulesets/java/unnecessary.xml">
+        <exclude name="UselessOverridingMethod"/>
+        <exclude name="UselessParentheses"/>
+        <exclude name="UnnecessaryModifier"/>
+    </rule>
 
     <rule ref="rulesets/java/unusedcode.xml"/>
 
