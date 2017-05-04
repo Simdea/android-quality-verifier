@@ -22,6 +22,25 @@ This plugin is available in<!--- [the Gradle Plugin Portal](https://plugins.grad
 Configuration
 -------------
 
+### Install
+
+##### Add to main build.gradle:
+```
+buildscript {
+    ...
+    dependencies {
+        ...
+        classpath 'pt.simdea.verifier:verifier:(last version)'
+        ...
+    }
+    ...
+}
+```
+
+##### add to app build.gradle:
+```
+apply plugin: 'pt.simdea.verifier'
+```
 ### Recommended
 
 The default one.
@@ -54,34 +73,16 @@ check {
   }
   // FindBugs configuration
   findbugs {
-    // Same options as Checkstyle, except for a couple of defaults:
-
-    // Configuration file for CheckStyle, default: <project_path>/config/findbugs.xml, if non-existent then <project_path>/<module_path>/config/findbugs.xml, if non-existent then plugin/src/main/resources/findbugs/conf-default.xml
-    config 'path/to/findbugs.xml'
-
-    // Output file for XML reports, default: new File(project.buildDir, 'outputs/findbugs/findbugs.xml')
-    reportXML new File(project.buildDir, 'path/where/you/want/findbugs.xml')
+    // Same options as Checkstyle
   }
   // PMD configuration
   pmd {
-    // Same options as Checkstyle and FindBugs, except for a couple of defaults:
-
-    // Configuration file for CheckStyle, default: <project_path>/config/pmd.xml, if non-existent then <project_path>/<module_path>/config/pmd.xml, if non-existent then plugin/src/main/resources/pmd/conf-default.xml
-    config 'path/to/pmd.xml'
-
-    // Output file for XML reports, default: new File(project.buildDir, 'outputs/pmd/pmd.xml')
-    reportXML new File(project.buildDir, 'path/where/you/want/pmd.xml')
+    // Same options as Checkstyle
   }
   
   // Lint configuration
-    alint {
-      // Same options as Checkstyle and FindBugs, except for a couple of defaults:
-  
-      // Configuration file for CheckStyle, default: <project_path>/config/pmd.xml, if non-existent then <project_path>/<module_path>/config/pmd.xml, if non-existent then plugin/src/main/resources/pmd/conf-default.xml
-      config 'path/to/pmd.xml'
-  
-      // Output file for XML reports, default: new File(project.buildDir, 'outputs/pmd/pmd.xml')
-      reportXML new File(project.buildDir, 'path/where/you/want/pmd.xml')
+    lint {
+      // Same vars of android lint options
     }
 }
 ```
