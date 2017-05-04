@@ -10,21 +10,27 @@ class CheckPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project target) {
-        target.extensions.create(CheckExtension.NAME, CheckExtension)
+        target.extensions.create(CheckExtension.NAME, CheckExtension, target)
         target.check.extensions.create('lint', CheckExtension.Lint)
 
-        def extension = target.check
 
         new CheckstyleCheck().apply(target)
         new FindbugsCheck().apply(target)
         new PmdCheck().apply(target)
+        //addLint(target, target.check)
+        target.subprojects { subProject ->
+            afterEvaluate {
+                def extension = target.check
 
-        addLint(target, target.check)
+                addLint(subProject, extension)
+            }
+        }
 
     }
 
     static boolean addLint(final Project subProject, final CheckExtension extension) {
-        if (!shouldIgnore(subProject, extension) && !extension.skip && isAndroidProject(subProject)) {
+        boolean skip = extension.lint.skip != null ? extension.lint.skip : false
+        if (!skip && isAndroidProject(subProject)) {
             subProject.android.lintOptions {
                 abortOnError extension.abortOnError != null ? extension.abortOnError : true
                 absolutePaths extension.lint.absolutePaths != null ? extension.lint.absolutePaths : true
@@ -33,24 +39,24 @@ class CheckPlugin implements Plugin<Project> {
                 ignoreWarnings extension.lint.ignoreWarnings != null ? extension.lint.ignoreWarnings : false
                 showAll extension.lint.showAll != null ? extension.lint.showAll : false
                 warningsAsErrors extension.lint.warningsAsErrors != null ? extension.lint.warningsAsErrors : false
-                lintConfig extension.lint.lintConfig != null ? extension.lint.lintConfig : resolveConfigFile("lint")
+                lintConfig extension.lint.lintConfig != null ? extension.lint.lintConfig : resolveConfigFile("lint", subProject)
             }
 
             if (extension.lint.htmlReport != null) {
                 subProject.android.lintOptions {
                     htmlReport extension.lint.htmlReport
-                    htmlOutput extension.lint.htmlOutput
+                    if (extension.lint.htmlReport && extension.lint.htmlOutput != null)
+                        htmlOutput extension.lint.htmlOutput
                 }
             }
 
             if (extension.lint.xmlReport != null) {
                 subProject.android.lintOptions {
                     xmlReport extension.lint.xmlReport
-                    xmlOutput extension.lint.xmlOutput
+                    if (extension.lint.xmlReport && extension.lint.xmlOutput != null)
+                        xmlOutput extension.lint.xmlOutput
                 }
             }
-
-            subProject.check.dependsOn 'lint'
 
             return true
         }
@@ -58,7 +64,7 @@ class CheckPlugin implements Plugin<Project> {
         return false
     }
 
-    File resolveConfigFile(String code) {
+    static File resolveConfigFile(String code, Project project) {
         File file = new File(project.buildDir, "tmp/android-check/${code}.xml")
         file.parentFile.mkdirs()
         file.delete()
@@ -70,9 +76,5 @@ class CheckPlugin implements Plugin<Project> {
         final boolean isAndroidLibrary = project.plugins.hasPlugin('com.android.library')
         final boolean isAndroidApp = project.plugins.hasPlugin('com.android.application')
         return isAndroidLibrary || isAndroidApp
-    }
-
-    private static boolean shouldIgnore(final Project project, final CheckExtension extension) {
-        return extension.ignoreProjects?.contains(project.name)
     }
 }

@@ -61,6 +61,8 @@ class CheckExtension {
         File xmlOutput
 
         boolean xmlReport
+
+        boolean skip
     }
 
 }
