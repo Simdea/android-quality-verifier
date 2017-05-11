@@ -52,7 +52,7 @@ Severity: HARD
         <module name="MemberName">
             <property name="applyToPrivate" value="true"/>
             <property name="applyToPublic" value="false"/>
-            <property name="applyToPackage" value="false"/>
+            <property name="applyToPackage" value="true"/>
             <property name="applyToProtected" value="true"/>
             <property name="format" value="^m[A-Z][a-z0-9][a-zA-Z0-9]*$"/>
         </module>
