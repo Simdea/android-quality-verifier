@@ -106,7 +106,12 @@
                     <xsl:call-template name="alternated-row"/>
                     <td>
                         <b>
-                            <xsl:value-of select="@type"/>
+                            <xsl:element name="a">
+                                <xsl:attribute name="href">http://findbugs.sourceforge.net/bugDescriptions.html#<xsl:value-of
+                                        select="@type"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="@type"/>
+                            </xsl:element>
                         </b>
                         <br/>
                         <xsl:value-of select="LongMessage/text()"/>

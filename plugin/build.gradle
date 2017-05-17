@@ -12,7 +12,7 @@ dependencies {
     // FindBugs
     compile 'com.google.code.findbugs:findbugs:3.0.1'
     // PMD
-    compile 'net.sourceforge.pmd:pmd-java:5.6.0'
+    compile 'net.sourceforge.pmd:pmd-java:5.6.1'
 }
 
 project.ext {
@@ -21,7 +21,7 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.4.3"
+    version = "3.4.8"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
     tags = ['android', 'verifier', 'check', 'checkstyle', 'findbugs', 'pmd', 'lint', 'quality']
