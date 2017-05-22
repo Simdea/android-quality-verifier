@@ -25,7 +25,7 @@ Configuration
 ### Install
 
 ##### Add to main build.gradle:
-```
+```gradle
 buildscript {
     ...
     dependencies {
@@ -47,7 +47,7 @@ The default one.
 
 ### Customized
 
-```
+```gradle
 // Configuration is completely optional, defaults will be used if not present
 check {
   // Do absolutely nothing, default: false
