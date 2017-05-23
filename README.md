@@ -1,32 +1,51 @@
-Android Check 2
+Android Quality Verifier
 ===============
 
 Static code analysis plugin for Android projects.
-This is a fork of [the original android-check plugin][1], which implements a really useful concept, but unfortunately seems abandoned.
+This is a fork of [the original android-check plugin][1], which implements a really useful concept.
 
 Build status
 ------------
 
-### master [![master](https://travis-ci.org/stoyicker/android-check-2.svg?branch=master)](https://travis-ci.org/stoyicker/android-check-2)
+[![Build Status](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master)](https://travis-ci.org/Simdea/android-quality-verifier)
 ### dev [![dev](https://travis-ci.org/stoyicker/android-check-2.svg?branch=dev)](https://travis-ci.org/stoyicker/android-check-2)
 
 Usage
 -----
 
-[ ![Download](https://api.bintray.com/packages/stoyicker-org/android-check-2/org.stoyicker.android-check/images/download.svg) ](https://bintray.com/stoyicker-org/android-check-2/org.stoyicker.android-check/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion)
 
-This plugin is available in [the Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.stoyicker.android-check) and jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for CheckStyle, `androidFindbugs` for FindBugs and `androidPmd` for PMD.
+This plugin is available in<!--- [the Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.stoyicker.android-check) and --> jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for CheckStyle, `androidFindbugs` for FindBugs and `androidPmd` for PMD.
 
 Configuration
 -------------
 
+### Install
+
+##### Add to main build.gradle:
+```gradle
+buildscript {
+    ...
+    dependencies {
+        ...
+        classpath 'pt.simdea.verifier:verifier:(last version)'
+        ...
+    }
+    ...
+}
+```
+
+##### add to app build.gradle:
+```gradle
+apply plugin: 'pt.simdea.verifier'
+```
 ### Recommended
 
 The default one.
 
 ### Customized
 
-```
+```gradle
 // Configuration is completely optional, defaults will be used if not present
 check {
   // Do absolutely nothing, default: false
@@ -52,23 +71,16 @@ check {
   }
   // FindBugs configuration
   findbugs {
-    // Same options as Checkstyle, except for a couple of defaults:
-
-    // Configuration file for CheckStyle, default: <project_path>/config/findbugs.xml, if non-existent then <project_path>/<module_path>/config/findbugs.xml, if non-existent then plugin/src/main/resources/findbugs/conf-default.xml
-    config 'path/to/findbugs.xml'
-
-    // Output file for XML reports, default: new File(project.buildDir, 'outputs/findbugs/findbugs.xml')
-    reportXML new File(project.buildDir, 'path/where/you/want/findbugs.xml')
+    // Same options as Checkstyle
   }
   // PMD configuration
   pmd {
-    // Same options as Checkstyle and FindBugs, except for a couple of defaults:
-
-    // Configuration file for CheckStyle, default: <project_path>/config/pmd.xml, if non-existent then <project_path>/<module_path>/config/pmd.xml, if non-existent then plugin/src/main/resources/pmd/conf-default.xml
-    config 'path/to/pmd.xml'
-
-    // Output file for XML reports, default: new File(project.buildDir, 'outputs/pmd/pmd.xml')
-    reportXML new File(project.buildDir, 'path/where/you/want/pmd.xml')
+    // Same options as Checkstyle
+  }
+  
+  // Lint configuration
+  lint {
+    // Same vars of android lint options
   }
 }
 ```
@@ -78,10 +90,9 @@ Developed By
 
 The original version of this plugin was developed by:
 
-  - [Noveo Group][2]
-  - [Pavel Stepanov](https://github.com/stefan-nsk) - <pstepanov@noveogroup.com>
+  - [Jorge Antonio Diaz-Benito Soriano](https://www.linkedin.com/in/jorgediazbenitosoriano)
 
-This fork is owned and maintained by [Jorge Antonio Diaz-Benito Soriano](https://www.linkedin.com/in/jorgediazbenitosoriano).
+This fork is owned and maintained by [Simdea][2].
 
 License
 =======
@@ -90,5 +101,5 @@ See [LICENSE.txt](LICENSE.txt).
 
 Original work licensed under [MIT license](https://github.com/noveogroup/android-check/blob/master/LICENSE.txt).
 
-[1]: https://github.com/noveogroup/android-check
-[2]: http://noveogroup.com/
+[1]: https://github.com/stoyicker/android-check-2
+[2]: http://simdea.pt/

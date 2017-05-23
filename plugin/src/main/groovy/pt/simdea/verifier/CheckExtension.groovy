@@ -3,6 +3,7 @@ package pt.simdea.verifier
 import org.gradle.api.Action
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleConfig
+import pt.simdea.verifier.cpd.CpdConfig
 import pt.simdea.verifier.findbugs.FindbugsConfig
 import pt.simdea.verifier.pmd.PmdConfig
 
@@ -24,11 +25,16 @@ class CheckExtension {
 
     void pmd(Action<PmdConfig> action) { action.execute(pmd) }
 
+    CpdConfig cpd
+
+    void cpd(Action<CpdConfig> action) { action.execute(cpd) }
+
     CheckExtension(Project project) {
         this.project = project
         this.checkstyle = new CheckstyleConfig(project)
         this.findbugs = new FindbugsConfig(project)
         this.pmd = new PmdConfig(project)
+        this.cpd = new CpdConfig(project)
     }
 
     boolean skip = false
