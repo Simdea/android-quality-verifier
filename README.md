@@ -8,9 +8,9 @@ This is a fork of [the original android-check plugin][1], which implements a rea
 Build status
 ------------
 
-| Master   |      Dev      |
-|----------|:-------------:|
-| [![Build Status](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master)](https://travis-ci.org/Simdea/android-quality-verifier) | [![dev](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev)](https://travis-ci.org/Simdea/android-quality-verifier) |
+| Master   | [![Build Status](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master)](https://travis-ci.org/Simdea/android-quality-verifier) |
+|----------|-------------|
+| **Dev** | [![dev](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev)](https://travis-ci.org/Simdea/android-quality-verifier) |
 
 Usage
 -----
