@@ -1,23 +1,20 @@
 Android Quality Verifier
 ===============
+[ ![Download](https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion)
 
 Static code analysis plugin for Android projects.
 This is a fork of [the original android-check plugin][1], which implements a really useful concept.
 
-<!---
 Build status
 ------------
 
-### master [![master](https://travis-ci.org/stoyicker/android-check-2.svg?branch=master)](https://travis-ci.org/stoyicker/android-check-2)
-### dev [![dev](https://travis-ci.org/stoyicker/android-check-2.svg?branch=dev)](https://travis-ci.org/stoyicker/android-check-2)
--->
+| Master   | [![Build Status](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master)](https://travis-ci.org/Simdea/android-quality-verifier) |
+|----------|-------------|
+| **Dev** | [![dev](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev)](https://travis-ci.org/Simdea/android-quality-verifier) |
 
 Usage
 -----
-
-[ ![Download](https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion)
-
-This plugin is available in<!--- [the Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.stoyicker.android-check) and --> jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for CheckStyle, `androidFindbugs` for FindBugs and `androidPmd` for PMD.
+This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for CheckStyle, `androidFindbugs` for FindBugs and `androidPmd` for PMD.
 
 Configuration
 -------------
@@ -25,7 +22,7 @@ Configuration
 ### Install
 
 ##### Add to main build.gradle:
-```
+```gradle
 buildscript {
     ...
     dependencies {
@@ -38,7 +35,7 @@ buildscript {
 ```
 
 ##### add to app build.gradle:
-```
+```gradle
 apply plugin: 'pt.simdea.verifier'
 ```
 ### Recommended
@@ -47,7 +44,7 @@ The default one.
 
 ### Customized
 
-```
+```gradle
 // Configuration is completely optional, defaults will be used if not present
 check {
   // Do absolutely nothing, default: false
@@ -81,9 +78,9 @@ check {
   }
   
   // Lint configuration
-    lint {
-      // Same vars of android lint options
-    }
+  lint {
+    // Same vars of android lint options
+  }
 }
 ```
 

@@ -5,7 +5,7 @@ repositories { jcenter() }
 dependencies {
     compileOnly gradleApi()
     // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:7.6.1') {
+    compile('com.puppycrawl.tools:checkstyle:7.7') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
@@ -53,8 +53,8 @@ project.ext {
         }
     }
     bintray = {
-        user = 'andrer757'
-        key = '6024b510d88c5c1fc86931103322362811626a3c'
+        user = USERNAME
+        key = KEY
         repo = 'android-quality-verifier'
         org = 'simdea'
         licenses = ['MIT']
