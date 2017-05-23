@@ -53,8 +53,8 @@ project.ext {
         }
     }
     bintray = {
-        user = USERNAME
-        key = KEY
+        user = project.hasProperty('bintray.user') ? project['bintray.user'] : 'anonymous'
+        key = project.hasProperty('bintray.key') ? project['bintray.key'] : 'api-key'
         repo = 'android-quality-verifier'
         org = 'simdea'
         licenses = ['MIT']
