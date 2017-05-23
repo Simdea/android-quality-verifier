@@ -1,5 +1,6 @@
 Android Quality Verifier
 ===============
+[ ![Download](https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion)
 
 Static code analysis plugin for Android projects.
 This is a fork of [the original android-check plugin][1], which implements a really useful concept.
@@ -7,13 +8,13 @@ This is a fork of [the original android-check plugin][1], which implements a rea
 Build status
 ------------
 
-### master [![Build Status](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master)](https://travis-ci.org/Simdea/android-quality-verifier)
-### dev [![dev](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev)](https://travis-ci.org/Simdea/android-quality-verifier)
-### maven [ ![Download](https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion)
+| Master   |      Dev      |
+|----------|:-------------:|
+| [![Build Status](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master)](https://travis-ci.org/Simdea/android-quality-verifier) | [![dev](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev)](https://travis-ci.org/Simdea/android-quality-verifier) |
 
 Usage
 -----
-This plugin is available in<!--- [the Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.stoyicker.android-check) and --> jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for CheckStyle, `androidFindbugs` for FindBugs and `androidPmd` for PMD.
+This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for CheckStyle, `androidFindbugs` for FindBugs and `androidPmd` for PMD.
 
 Configuration
 -------------
