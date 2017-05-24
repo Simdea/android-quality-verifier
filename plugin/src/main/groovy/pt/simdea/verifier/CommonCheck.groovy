@@ -68,7 +68,7 @@ abstract class CommonCheck<Config extends CommonConfig> {
                         } else {
                             target.logger.warn "Your system does not support java.awt.Desktop. " +
                                     "Not opening report automatically. " +
-                                    "See https://github.com/stoyicker/android-check-2/issues/42"
+                                    "See https://github.com/simdea/android-quality-verifier/issues/42"
                         }
                         throw new GradleException(errorMessage)
                     } else {

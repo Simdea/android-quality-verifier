@@ -26,12 +26,12 @@ tagAndCreateGitHubRelease() {
 
     # Create the release in GitHub and extract its id from the response
     curl \
-        -u stoyicker:${GITHUB_TOKEN} \
+        -u simdea:${GITHUB_TOKEN} \
         --header "Accept: application/vnd.github.v3+json" \
         --header "Content-Type: application/json; charset=utf-8" \
         --request POST \
         --data "${BODY}" \
-        https://api.github.com/repos/stoyicker/android-check-2/releases
+        https://api.github.com/repos/simdea/android-quality-verifier/releases
 }
 
 tagAndCreateGitHubRelease
