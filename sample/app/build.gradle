@@ -29,7 +29,7 @@ dependencies {
     compile 'com.github.tony19:logback-android-classic:1.1.1-4'
 }
 
-verifier {
+check {
     abortOnError true
 
     checkstyle {

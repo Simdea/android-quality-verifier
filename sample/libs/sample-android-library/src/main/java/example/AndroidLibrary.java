@@ -1,7 +1,6 @@
 package example;
 
 import android.content.Context;
-
 import example.library.R;
 
 public final class AndroidLibrary {

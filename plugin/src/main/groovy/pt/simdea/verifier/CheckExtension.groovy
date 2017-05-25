@@ -58,7 +58,7 @@ class CheckExtension {
 
         boolean ignoreWarnings
 
-        File lintConfig
+        File config
 
         boolean showAll
 

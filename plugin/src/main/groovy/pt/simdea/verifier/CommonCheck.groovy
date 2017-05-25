@@ -22,8 +22,7 @@ abstract class CommonCheck<Config extends CommonConfig> {
 
     protected abstract Config getConfig(CheckExtension extension)
 
-    protected abstract void performCheck(Project project, List<File> sources,
-                                         File configFile, File xmlReportFile)
+    protected abstract void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile)
 
     protected abstract int getErrorCount(File xmlReportFile)
 

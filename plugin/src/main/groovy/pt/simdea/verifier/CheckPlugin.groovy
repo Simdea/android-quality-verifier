@@ -3,6 +3,7 @@ package pt.simdea.verifier
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleCheck
+import pt.simdea.verifier.cpd.CpdCheck
 import pt.simdea.verifier.findbugs.FindbugsCheck
 import pt.simdea.verifier.pmd.PmdCheck
 
@@ -17,6 +18,7 @@ class CheckPlugin implements Plugin<Project> {
         new CheckstyleCheck().apply(target)
         new FindbugsCheck().apply(target)
         new PmdCheck().apply(target)
+        new CpdCheck().apply(target)
         //addLint(target, target.check)
         target.subprojects { subProject ->
             afterEvaluate {
@@ -39,7 +41,7 @@ class CheckPlugin implements Plugin<Project> {
                 ignoreWarnings extension.lint.ignoreWarnings != null ? extension.lint.ignoreWarnings : false
                 showAll extension.lint.showAll != null ? extension.lint.showAll : false
                 warningsAsErrors extension.lint.warningsAsErrors != null ? extension.lint.warningsAsErrors : false
-                lintConfig extension.lint.lintConfig != null ? extension.lint.lintConfig : resolveConfigFile("lint", subProject)
+                lintConfig extension.lint.config != null ? new File(extension.lint.config) : resolveConfigFile("lint", subProject)
             }
 
             if (extension.lint.htmlReport != null) {

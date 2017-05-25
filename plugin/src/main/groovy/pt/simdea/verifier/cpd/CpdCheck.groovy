@@ -15,22 +15,21 @@ class CpdCheck extends CommonCheck {
     protected CommonConfig getConfig(CheckExtension extension) { return extension.cpd }
 
     @Override
-    protected void performCheck(Project project, List<File> sources,
-                                File configFile, File xmlReportFile) {
-        CPDTask pmdTask = new CPDTask()
+    protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
+        CPDTask cpdTask = new CPDTask()
 
-        pmdTask.project = project.ant.antProject
-        pmdTask.ruleSetFiles = configFile.toString()
-        pmdTask.addFormatter(new Formatter(type: 'xml', toFile: xmlReportFile))
+        cpdTask.project = project.ant.antProject
+        cpdTask.ruleSetFiles = configFile.toString()
+        cpdTask.addFormatter(new Formatter(type: 'xml', toFile: xmlReportFile))
 
-        pmdTask.failOnError = false
-        pmdTask.failOnRuleViolation = false
+        cpdTask.failOnError = false
+        cpdTask.failOnRuleViolation = false
 
         sources.findAll { it.exists() }.each {
-            pmdTask.addFileset(project.ant.fileset(dir: it))
+            cpdTask.addFileset(project.ant.fileset(dir: it))
         }
 
-        pmdTask.perform()
+        cpdTask.perform()
     }
 
     @Override
