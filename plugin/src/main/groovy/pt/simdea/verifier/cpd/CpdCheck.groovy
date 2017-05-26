@@ -19,11 +19,6 @@ class CpdCheck extends CommonCheck {
         CPDTask cpdTask = new CPDTask()
 
         cpdTask.project = project.ant.antProject
-        cpdTask.ruleSetFiles = configFile.toString()
-        cpdTask.addFormatter(new Formatter(type: 'xml', toFile: xmlReportFile))
-
-        cpdTask.failOnError = false
-        cpdTask.failOnRuleViolation = false
 
         sources.findAll { it.exists() }.each {
             cpdTask.addFileset(project.ant.fileset(dir: it))
@@ -40,7 +35,7 @@ class CpdCheck extends CommonCheck {
 
     @Override
     protected String getErrorMessage(int errorCount, File htmlReportFile) {
-        return "$errorCount PMD rule violations were found. See the report at: ${htmlReportFile.toURI()}"
+        return "$errorCount CPD rule violations were found. See the report at: ${htmlReportFile.toURI()}"
     }
 
 }
