@@ -21,7 +21,7 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.4.9"
+    version = "3.5.1"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
     tags = ['android', 'verifier', 'check', 'checkstyle', 'findbugs', 'pmd', 'lint', 'quality']
