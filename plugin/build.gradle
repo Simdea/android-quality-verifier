@@ -5,14 +5,14 @@ repositories { jcenter() }
 dependencies {
     compileOnly gradleApi()
     // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:7.7') {
+    compile('com.puppycrawl.tools:checkstyle:7.8') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
     // FindBugs
     compile 'com.google.code.findbugs:findbugs:3.0.1'
     // PMD
-    compile 'net.sourceforge.pmd:pmd-java:5.6.1'
+    compile 'net.sourceforge.pmd:pmd-java:5.7.0'
 }
 
 project.ext {
