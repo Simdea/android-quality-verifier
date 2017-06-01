@@ -15,11 +15,9 @@ class CheckPlugin implements Plugin<Project> {
         target.check.extensions.create('lint', CheckExtension.Lint)
 
 
-        new CheckstyleCheck().apply(target)
         new FindbugsCheck().apply(target)
         new PmdCheck().apply(target)
         new CpdCheck().apply(target)
-        //addLint(target, target.check)
         target.subprojects { subProject ->
             afterEvaluate {
                 def extension = target.check
@@ -27,6 +25,7 @@ class CheckPlugin implements Plugin<Project> {
                 addLint(subProject, extension)
             }
         }
+        new CheckstyleCheck().apply(target)
 
     }
 
