@@ -22,8 +22,8 @@ cache:
 
 install:
   # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
-  - curl https://dl.google.com/android/repository/tools_r25.2.5-linux.zip > $HOME/android-sdk-dl/tools_r25.2.5-linux.zip
-  - unzip -n $HOME/android-sdk-dl/tools_r25.2.5-linux.zip -d $HOME/android-sdk
+  - curl https://dl.google.com/android/repository/tools_r25.2.5-linux.zip > $HOME/tools_r25.2.5-linux.zip
+  - unzip -n $HOME/tools_r25.2.5-linux.zip -d $HOME/android-sdk
 
   # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
   - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'tools'
