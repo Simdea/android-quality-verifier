@@ -15,22 +15,16 @@ class CpdCheck extends CommonCheck {
     protected CommonConfig getConfig(CheckExtension extension) { return extension.cpd }
 
     @Override
-    protected void performCheck(Project project, List<File> sources,
-                                File configFile, File xmlReportFile) {
-        CPDTask pmdTask = new CPDTask()
+    protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
+        CPDTask cpdTask = new CPDTask()
 
-        pmdTask.project = project.ant.antProject
-        pmdTask.ruleSetFiles = configFile.toString()
-        pmdTask.addFormatter(new Formatter(type: 'xml', toFile: xmlReportFile))
-
-        pmdTask.failOnError = false
-        pmdTask.failOnRuleViolation = false
+        cpdTask.project = project.ant.antProject
 
         sources.findAll { it.exists() }.each {
-            pmdTask.addFileset(project.ant.fileset(dir: it))
+            cpdTask.addFileset(project.ant.fileset(dir: it))
         }
 
-        pmdTask.perform()
+        cpdTask.perform()
     }
 
     @Override
@@ -41,7 +35,7 @@ class CpdCheck extends CommonCheck {
 
     @Override
     protected String getErrorMessage(int errorCount, File htmlReportFile) {
-        return "$errorCount PMD rule violations were found. See the report at: ${htmlReportFile.toURI()}"
+        return "$errorCount CPD rule violations were found. See the report at: ${htmlReportFile.toURI()}"
     }
 
 }

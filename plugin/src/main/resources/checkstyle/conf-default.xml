@@ -221,6 +221,7 @@
             <property name="logLoadErrors" value="true"/>
             <property name="suppressLoadErrors" value="false"/>
             <property name="tokens" value="METHOD_DEF, CTOR_DEF"/>
+            <property name="allowedAnnotations" value="Override LinkedMethod"/>
         </module>
 
         <module name="JavadocVariable">
