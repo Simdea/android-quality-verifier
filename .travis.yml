@@ -43,7 +43,7 @@ before_script:
         exit 1
       fi
 script:
-  - ./gradlew clean :plugin:assemble clean :plugin:check
+  - ./gradlew clean assemble clean check
 after_success:
   - |
       if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
