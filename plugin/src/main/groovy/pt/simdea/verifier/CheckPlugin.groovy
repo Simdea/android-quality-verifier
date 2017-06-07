@@ -14,10 +14,12 @@ class CheckPlugin implements Plugin<Project> {
         target.extensions.create(CheckExtension.NAME, CheckExtension, target)
         target.check.extensions.create('lint', CheckExtension.Lint)
 
+        target.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.1")
 
         new FindbugsCheck().apply(target)
         new PmdCheck().apply(target)
         new CpdCheck().apply(target)
+        addLint(target, target.check)
         target.subprojects { subProject ->
             afterEvaluate {
                 def extension = target.check
@@ -26,7 +28,6 @@ class CheckPlugin implements Plugin<Project> {
             }
         }
         new CheckstyleCheck().apply(target)
-
     }
 
     static boolean addLint(final Project subProject, final CheckExtension extension) {
@@ -41,21 +42,21 @@ class CheckPlugin implements Plugin<Project> {
                 showAll extension.lint.showAll != null ? extension.lint.showAll : false
                 warningsAsErrors extension.lint.warningsAsErrors != null ? extension.lint.warningsAsErrors : false
                 lintConfig extension.lint.config != null ? new File(extension.lint.config) : resolveConfigFile("lint", subProject)
+                if (extension.lint.disable != null)
+                    disable extension.lint.disable
             }
 
-            if (extension.lint.htmlReport != null) {
+            if (extension.lint.reportHTML != null) {
                 subProject.android.lintOptions {
-                    htmlReport extension.lint.htmlReport
-                    if (extension.lint.htmlReport && extension.lint.htmlOutput != null)
-                        htmlOutput extension.lint.htmlOutput
+                    htmlReport true
+                    htmlOutput extension.lint.reportHTML
                 }
             }
 
-            if (extension.lint.xmlReport != null) {
+            if (extension.lint.reportXML != null) {
                 subProject.android.lintOptions {
-                    xmlReport extension.lint.xmlReport
-                    if (extension.lint.xmlReport && extension.lint.xmlOutput != null)
-                        xmlOutput extension.lint.xmlOutput
+                    xmlReport true
+                    xmlOutput extension.lint.reportXML
                 }
             }
 

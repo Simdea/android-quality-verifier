@@ -1,18 +1,37 @@
-apply plugin: 'groovy'
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
 
-repositories { jcenter() }
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
 
 dependencies {
-    compileOnly gradleApi()
-    // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:7.8') {
-        // Android Lint also depends on guava, so don't bring it in twice
-        exclude module: 'guava'
-    }
-    // FindBugs
-    compile 'com.google.code.findbugs:findbugs:3.0.1'
-    // PMD
-    compile 'net.sourceforge.pmd:pmd-java:5.7.0'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 project.ext {
@@ -52,19 +71,16 @@ project.ext {
             }
         }
     }
-    bintray = {
-        user = project.hasProperty('bintrayUser') ? project['bintrayUser'] : 'anonymous'
-        key = project.hasProperty('bintrayKey') ? project['bintrayKey'] : 'api-key'
-        repo = 'android-quality-verifier'
-        org = 'simdea'
-        licenses = ['MIT']
-        issueTracker = "${project.ext.scm}/issues"
-        vcs = project.ext.scm
-        sign = true
-        dryRun = false
-        publish = true
-    }
+}
+publish {
+    userOrg = 'simdea'
+    groupId = 'pt.simdea.verifier.annotations'
+    artifactId = 'verifier-annotations'
+    publishVersion = '0.0.1'
+    repoName = 'android-quality-verifier'
+    repository = project.ext.scm
+    issueTracker = "${project.ext.scm}/issues"
+    website = 'https://github.com/novoda/bintray-release'
+    licences = ['MIT']
 }
 
-apply from: project.file('gradle/gradle-publish.gradle')
-apply from: project.file('gradle/publish.gradle')

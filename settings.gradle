@@ -1,2 +1,2 @@
-include ':plugin', ':sample'
+include ':plugin', ':sample', ':verifier-annotations'
 rootProject.name = 'android-quality-verifier'

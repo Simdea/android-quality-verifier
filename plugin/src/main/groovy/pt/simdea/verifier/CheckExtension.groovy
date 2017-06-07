@@ -50,11 +50,11 @@ class CheckExtension {
 
         boolean checkAllWarnings
 
+        Set<String> disable
+
         boolean checkReleaseBuilds
 
-        File htmlOutput
-
-        boolean htmlReport
+        File reportHTML
 
         boolean ignoreWarnings
 
@@ -64,9 +64,7 @@ class CheckExtension {
 
         boolean warningsAsErrors
 
-        File xmlOutput
-
-        boolean xmlReport
+        File reportXML
 
         boolean skip
     }

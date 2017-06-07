@@ -21,8 +21,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         LOGGER.info("MainActivity::onCreate");
-        LOGGER.info("AndroidLibrary.process: {}", AndroidLibrary.process(this));
-        LOGGER.info("JavaLibrary.process: {}", JavaLibrary.process(this));
+        //LOGGER.info("AndroidLibrary.process: {}", AndroidLibrary.process(this));
+        //LOGGER.info("JavaLibrary.process: {}", JavaLibrary.process(this));
 
         new Thread() {
             @Override

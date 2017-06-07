@@ -1,2 +1,2 @@
-include ':libs:sample-android-library', ':libs:sample-java-library', ':app'
+include ':app', ':verifier-annotations'
 rootProject.name = 'sample'
