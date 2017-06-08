@@ -14,6 +14,8 @@ class CheckPlugin implements Plugin<Project> {
         target.extensions.create(CheckExtension.NAME, CheckExtension, target)
         target.check.extensions.create('lint', CheckExtension.Lint)
 
+        target.repositories.add(target.getRepositories().jcenter())
+        target.dependencies.add("compile", "io.realm:realm-annotations:0.0.1")
         target.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.1")
 
         new FindbugsCheck().apply(target)
