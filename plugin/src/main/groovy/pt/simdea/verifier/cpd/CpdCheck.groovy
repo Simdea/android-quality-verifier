@@ -19,6 +19,7 @@ class CpdCheck extends CommonCheck {
         CPDTask cpdTask = new CPDTask()
 
         cpdTask.project = project.ant.antProject
+        cpdTask.minimumTokenCount = 100
 
         sources.findAll { it.exists() }.each {
             cpdTask.addFileset(project.ant.fileset(dir: it))
