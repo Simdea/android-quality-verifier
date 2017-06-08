@@ -20,6 +20,8 @@ class CpdCheck extends CommonCheck {
 
         cpdTask.project = project.ant.antProject
         cpdTask.minimumTokenCount = 100
+        cpdTask.outputFile = xmlReportFile
+        cpdTask.format = CPDTask.FormatAttribute.getInstance(CPDTask.FormatAttribute, "xml")
 
         sources.findAll { it.exists() }.each {
             cpdTask.addFileset(project.ant.fileset(dir: it))
