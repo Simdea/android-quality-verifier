@@ -14,7 +14,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -76,7 +76,7 @@ publish {
     userOrg = 'simdea'
     groupId = 'pt.simdea.verifier.annotations'
     artifactId = 'verifier-annotations'
-    publishVersion = '0.0.1'
+    publishVersion = '0.0.2'
     repoName = 'android-quality-verifier'
     repository = project.ext.scm
     issueTracker = "${project.ext.scm}/issues"
