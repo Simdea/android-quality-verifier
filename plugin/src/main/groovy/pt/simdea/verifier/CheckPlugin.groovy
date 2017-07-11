@@ -21,7 +21,7 @@ class CheckPlugin implements Plugin<Project> {
         new FindbugsCheck().apply(target)
         new PmdCheck().apply(target)
         new CpdCheck().apply(target)
-        addLint(target, target.check)
+        //addLint(target, target.check)
         target.subprojects { subProject ->
             afterEvaluate {
                 def extension = target.check
@@ -61,6 +61,8 @@ class CheckPlugin implements Plugin<Project> {
                     xmlOutput extension.lint.reportXML
                 }
             }
+
+            subProject.check.dependsOn 'lint'
 
             return true
         }
