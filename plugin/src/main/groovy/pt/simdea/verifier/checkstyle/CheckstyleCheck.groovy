@@ -1,7 +1,6 @@
 package pt.simdea.verifier.checkstyle
 
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask
-import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.Formatter
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.FormatterType
 import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.Project
@@ -22,7 +21,7 @@ class CheckstyleCheck extends CommonCheck {
         CheckstyleAntTask checkStyleTask = new CheckstyleAntTask()
 
         checkStyleTask.project = project.ant.antProject
-        checkStyleTask.setConfigUrl(configFile.toURI().toURL())
+        checkStyleTask.setConfig(configFile.toURI().toURL().toString())
         checkStyleTask.addFormatter(new Formatter(type: new FormatterType(value: 'xml'), tofile: xmlReportFile))
         File file = new File(project.buildDir, "tmp/android-check/checkstyle-suppress.xml")
         file.parentFile.mkdirs()
