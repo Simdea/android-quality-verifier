@@ -5,7 +5,7 @@ repositories { jcenter() }
 dependencies {
     compileOnly gradleApi()
     // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:8.0') {
+    compile('com.puppycrawl.tools:checkstyle:7.8.2') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
@@ -21,7 +21,7 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.5.6"
+    version = "3.5.7"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
     tags = ['android', 'verifier', 'check', 'checkstyle', 'findbugs', 'pmd', 'lint', 'quality']
