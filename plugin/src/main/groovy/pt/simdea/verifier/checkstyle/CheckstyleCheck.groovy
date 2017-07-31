@@ -1,6 +1,7 @@
 package pt.simdea.verifier.checkstyle
 
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask
+import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.Formatter
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.FormatterType
 import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.Project
