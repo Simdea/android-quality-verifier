@@ -81,7 +81,7 @@ publish {
     userOrg = 'simdea'
     groupId = 'pt.simdea.verifier.annotations'
     artifactId = 'verifier-annotations'
-    publishVersion = '0.0.2'
+    publishVersion = '0.0.3'
     repoName = 'android-quality-verifier'
     repository = project.ext.scm
     issueTracker = "${project.ext.scm}/issues"
