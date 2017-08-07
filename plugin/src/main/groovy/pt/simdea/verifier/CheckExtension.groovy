@@ -6,6 +6,7 @@ import pt.simdea.verifier.checkstyle.CheckstyleConfig
 import pt.simdea.verifier.cpd.CpdConfig
 import pt.simdea.verifier.findbugs.FindbugsConfig
 import pt.simdea.verifier.pmd.PmdConfig
+import pt.simdea.verifier.spotbugs.SpotbugsConfig
 
 class CheckExtension {
 
@@ -21,6 +22,10 @@ class CheckExtension {
 
     void findbugs(Action<FindbugsConfig> action) { action.execute(findbugs) }
 
+    SpotbugsConfig spotbugs
+
+    void spotbugs(Action<SpotbugsConfig> action) { action.execute(spotbugs) }
+
     PmdConfig pmd
 
     void pmd(Action<PmdConfig> action) { action.execute(pmd) }
@@ -33,6 +38,7 @@ class CheckExtension {
         this.project = project
         this.checkstyle = new CheckstyleConfig(project)
         this.findbugs = new FindbugsConfig(project)
+        this.spotbugs = new SpotbugsConfig(project)
         this.pmd = new PmdConfig(project)
         this.cpd = new CpdConfig(project)
     }

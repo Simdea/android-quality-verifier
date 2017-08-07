@@ -1,6 +1,6 @@
 Android Quality Verifier
 ===============
-[ ![Download](https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion) [![gitcheese.com](https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg)](https://www.gitcheese.com/donate/users/1757083/repos/87924699)
+[ ![Download][14] ][15] [![gitcheese.com][16]][17]
 
 Static code analysis plugin for Android projects.
 This is a fork of [the original android-check plugin][1], which implements a really useful concept.
@@ -8,13 +8,13 @@ This is a fork of [the original android-check plugin][1], which implements a rea
 Build status
 ------------
 
-| Master   | [![Build Status](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master)](https://travis-ci.org/Simdea/android-quality-verifier) |
+| Master   | [![Build Status][11]][13] |
 |----------|-------------|
-| **Dev** | [![dev](https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev)](https://travis-ci.org/Simdea/android-quality-verifier) |
+| **Dev** | [![dev][12]][13] |
 
 Usage
 -----
-This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for [CheckStyle][3], `androidFindbugs` for [FindBugs][4], `CPDTask`  for [CPD][5] and `androidPmd` for [PMD][6].
+This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for [CheckStyle][3], `androidFindbugs` for [FindBugs][4], `androidSpotbugs` for [SpotBugs][10], `CPDTask`  for [CPD][5] and `androidPmd` for [PMD][6].
 
 Configuration
 -------------
@@ -80,6 +80,11 @@ check {
     // Same options as Checkstyle
   }
   
+  // SpotBugs configuration
+  spotbugs {
+    // Same options as Checkstyle
+  }
+  
   // PMD configuration
   pmd {
     // Same options as Checkstyle
@@ -117,3 +122,11 @@ Original work licensed under [MIT license][8].
 [7]: LICENSE.txt
 [8]: https://github.com/noveogroup/android-check/blob/master/LICENSE.txt
 [9]: https://www.linkedin.com/in/jorgediazbenitosoriano
+[10]: https://spotbugs.github.io
+[11]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master
+[12]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev
+[13]: https://travis-ci.org/Simdea/android-quality-verifier
+[14]: https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg
+[15]: https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion
+[16]: https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg
+[17]: https://www.gitcheese.com/donate/users/1757083/repos/87924699

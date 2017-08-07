@@ -6,6 +6,7 @@ import pt.simdea.verifier.checkstyle.CheckstyleCheck
 import pt.simdea.verifier.cpd.CpdCheck
 import pt.simdea.verifier.findbugs.FindbugsCheck
 import pt.simdea.verifier.pmd.PmdCheck
+import pt.simdea.verifier.spotbugs.SpotbugsCheck
 
 class CheckPlugin implements Plugin<Project> {
 
@@ -19,6 +20,7 @@ class CheckPlugin implements Plugin<Project> {
         target.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
 
         new FindbugsCheck().apply(target)
+        new SpotbugsCheck().apply(target)
         new PmdCheck().apply(target)
         new CpdCheck().apply(target)
         //addLint(target, target.check)

@@ -22,7 +22,7 @@ class CheckstyleCheck extends CommonCheck {
         CheckstyleAntTask checkStyleTask = new CheckstyleAntTask()
 
         checkStyleTask.project = project.ant.antProject
-        checkStyleTask.setConfigUrl(configFile.toURI().toURL())
+        checkStyleTask.config = configFile.toURI().toURL()
         checkStyleTask.addFormatter(new Formatter(type: new FormatterType(value: 'xml'), tofile: xmlReportFile))
         File file = new File(project.buildDir, "tmp/android-check/checkstyle-suppress.xml")
         file.parentFile.mkdirs()

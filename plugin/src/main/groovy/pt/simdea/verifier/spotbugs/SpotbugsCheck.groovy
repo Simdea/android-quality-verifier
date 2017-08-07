@@ -1,6 +1,6 @@
-package pt.simdea.verifier.findbugs
+package pt.simdea.verifier.spotbugs
 
-import edu.umd.cs.findbugs.anttask.FindBugsTask
+import edu.umd.cs.findbugs.anttask.FindBugsTask as SpotBugsTask
 import groovy.util.slurpersupport.GPathResult
 import org.apache.tools.ant.types.FileSet
 import org.apache.tools.ant.types.Path
@@ -9,36 +9,34 @@ import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
 import pt.simdea.verifier.CommonConfig
 
-@Deprecated
-class FindbugsCheck extends CommonCheck {
+class SpotbugsCheck extends CommonCheck {
 
-    FindbugsCheck() { super('findbugs', 'androidFindbugs', 'Runs Android FindBugs') }
+    SpotbugsCheck() { super('spotbugs', 'androidSpotbugs', 'Runs Android SpotBugs') }
 
     @Override
     protected Set<String> getDependencies() { ['assemble'] }
 
     @Override
-    protected CommonConfig getConfig(CheckExtension extension) { return extension.findbugs }
+    protected CommonConfig getConfig(CheckExtension extension) { return extension.spotbugs }
 
     @Override
-    protected void performCheck(Project project, List<File> sources,
-                                File configFile, File xmlReportFile) {
+    protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
 
-        FindBugsTask findBugsTask = new FindBugsTask()
+        SpotBugsTask spotBugsTask = new SpotBugsTask()
 
-        findBugsTask.project = project.ant.antProject
-        findBugsTask.workHard = true
-        findBugsTask.excludeFilter = configFile
-        findBugsTask.output = "xml:withMessages"
-        findBugsTask.outputFile = xmlReportFile
-        findBugsTask.failOnError = false
+        spotBugsTask.project = project.ant.antProject
+        spotBugsTask.workHard = true
+        spotBugsTask.excludeFilter = configFile
+        spotBugsTask.output = "xml:withMessages"
+        spotBugsTask.outputFile = xmlReportFile
+        spotBugsTask.failOnError = false
 
-        Path sourcePath = findBugsTask.createSourcePath()
+        Path sourcePath = spotBugsTask.createSourcePath()
         sources.findAll { it.exists() }.each {
             sourcePath.addFileset(project.ant.fileset(dir: it))
         }
 
-        Path classpath = findBugsTask.createClasspath()
+        Path classpath = spotBugsTask.createClasspath()
         project.rootProject.buildscript.configurations.classpath.resolve().each {
             classpath.createPathElement().location = it
         }
@@ -58,9 +56,9 @@ class FindbugsCheck extends CommonCheck {
             }
         }
 
-        findBugsTask.addFileset(project.ant.fileset(dir: project.buildDir, includes: includes.join(',')))
+        spotBugsTask.addFileset(project.ant.fileset(dir: project.buildDir, includes: includes.join(',')))
 
-        findBugsTask.perform()
+        spotBugsTask.perform()
     }
 
     @Override
