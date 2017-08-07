@@ -4,7 +4,6 @@ import org.gradle.api.Action
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleConfig
 import pt.simdea.verifier.cpd.CpdConfig
-import pt.simdea.verifier.findbugs.FindbugsConfig
 import pt.simdea.verifier.pmd.PmdConfig
 import pt.simdea.verifier.spotbugs.SpotbugsConfig
 
@@ -18,9 +17,9 @@ class CheckExtension {
 
     void checkstyle(Action<CheckstyleConfig> action) { action.execute(checkstyle) }
 
-    FindbugsConfig findbugs
+    //FindbugsConfig findbugs
 
-    void findbugs(Action<FindbugsConfig> action) { action.execute(findbugs) }
+    //void findbugs(Action<FindbugsConfig> action) { action.execute(findbugs) }
 
     SpotbugsConfig spotbugs
 
@@ -37,7 +36,7 @@ class CheckExtension {
     CheckExtension(Project project) {
         this.project = project
         this.checkstyle = new CheckstyleConfig(project)
-        this.findbugs = new FindbugsConfig(project)
+        //this.findbugs = new FindbugsConfig(project)
         this.spotbugs = new SpotbugsConfig(project)
         this.pmd = new PmdConfig(project)
         this.cpd = new CpdConfig(project)

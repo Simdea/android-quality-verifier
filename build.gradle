@@ -1,3 +1,21 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha8'
+        classpath 'pt.simdea.verifier:verifier:3.5.0'
+        classpath 'com.novoda:bintray-release:0.5.0'
+    }
+}
+
+allprojects {
+    repositories { jcenter() }
+}
+
 task wrapper(type: Wrapper) {
     group 'Build Setup'
     description 'Initializes the Gradle Wrapper.'

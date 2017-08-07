@@ -50,7 +50,7 @@ check {
   // Do absolutely nothing, default: false
   skip true/false
   // Fails build if a violation is found, default: true
-  abortOnError true/false. //Ignored if all per-tool confs are set to abortOnError false (see below)
+  abortOnError true/false //Ignored if all per-tool confs are set to abortOnError false (see below)
   
   // Checkstyle configuration
   checkstyle {
@@ -75,7 +75,7 @@ check {
     // Same options as Checkstyle
   }
   
-  // FindBugs configuration
+  // FindBugs configuration (Deprecated)
   findbugs {
     // Same options as Checkstyle
   }
