@@ -7,5 +7,5 @@ build
 *.iml
 fixCommits.sh
 gen/
-sample/app/gen/
+sample/gen/
 sample/gen/

@@ -107,7 +107,8 @@
                     <td>
                         <b>
                             <xsl:element name="a">
-                                <xsl:attribute name="href">http://findbugs.sourceforge.net/bugDescriptions.html#<xsl:value-of
+                                <xsl:attribute name="href">
+                                    https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#<xsl:value-of
                                         select="@type"/>
                                 </xsl:attribute>
                                 <xsl:value-of select="@type"/>

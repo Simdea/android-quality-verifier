@@ -4,10 +4,13 @@ buildscript {
         maven {
             url 'https://maven.google.com'
         }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-alpha8'
-        classpath 'pt.simdea.verifier:verifier:3.5.0'
+        classpath 'pt.simdea.verifier:verifier:3.5.9-pre18'
         classpath 'com.novoda:bintray-release:0.5.0'
     }
 }

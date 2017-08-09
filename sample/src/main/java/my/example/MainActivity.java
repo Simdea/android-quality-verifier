@@ -2,11 +2,9 @@ package example;
 
 import android.app.Activity;
 import android.os.Bundle;
-
+import my.example.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import my.example.R;
 
 public class MainActivity extends Activity {
 
