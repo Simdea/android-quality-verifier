@@ -23,13 +23,14 @@ class SpotbugsCheck extends CommonCheck {
     protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
 
         SpotBugsTask spotBugsTask = new SpotBugsTask()
-
+        project.ant.lifecycleLogLevel = "VERBOSE"
         spotBugsTask.project = project.ant.antProject
         spotBugsTask.workHard = true
         spotBugsTask.excludeFilter = configFile
         spotBugsTask.output = "xml:withMessages"
         spotBugsTask.outputFile = xmlReportFile
-        spotBugsTask.failOnError = false
+        spotBugsTask.failOnError = true
+        spotBugsTask.debug = true
 
         Path sourcePath = spotBugsTask.createSourcePath()
         sources.findAll { it.exists() }.each {

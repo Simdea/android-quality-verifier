@@ -58,5 +58,4 @@ after_success:
         echo "CI on master succeded. Executing release tasks..."
         git fetch --unshallow
         ./gradlew bintrayUpload publishPlugins -PbintrayUser="$BINTRAY_USER" -PbintrayKey="$BINTRAY_KEY" -PdryRun=false
-        ./plugin/ci/tag_release.sh
       fi
