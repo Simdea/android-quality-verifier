@@ -1,6 +1,6 @@
 Android Quality Verifier
 ===============
-[ ![Download](null/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg?version=3.5.8) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/3.5.8/link) [![gitcheese.com](https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg)](https://www.gitcheese.com/donate/users/1757083/repos/87924699)
+[ ![Download](https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg?version=3.5.8) ](https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/3.5.8/link) [![gitcheese.com](https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg)](https://www.gitcheese.com/donate/users/1757083/repos/87924699)
 
 Static code analysis plugin for Android projects.
 This is a fork of [the original android-check plugin][1], which implements a really useful concept.
