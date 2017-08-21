@@ -38,6 +38,7 @@ check {
     }*/
 
     spotbugs {
+        skip true
         abortOnError false
         reportXML new File(project.buildDir, 'reports/spotbugs/spotbugs.xml')
     }
