@@ -1,6 +1,6 @@
 Android Quality Verifier
 ===============
-[ ![Download][14] ][15] [![gitcheese.com][16]][17]
+[![Download][14]][15] [![gitcheese.com][16]][17]
 
 Static code analysis plugin for Android projects.
 This is a fork of [the original android-check plugin][1], which implements a really useful concept.
@@ -14,7 +14,7 @@ Build status
 
 Usage
 -----
-This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for [CheckStyle][3], `androidFindbugs` for [FindBugs][4], `androidSpotbugs` for [SpotBugs][10], `CPDTask`  for [CPD][5] and `androidPmd` for [PMD][6].
+This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for [CheckStyle][3], `androidFindbugs` for [FindBugs][4], `CPDTask`  for [CPD][5] and `androidPmd` for [PMD][6].
 
 Configuration
 -------------
@@ -27,7 +27,7 @@ buildscript {
     ...
     dependencies {
         ...
-        classpath 'pt.simdea.verifier:verifier:(last version)'
+        classpath 'pt.simdea.verifier:verifier:3.5.8'
         ...
     }
     ...
@@ -75,13 +75,8 @@ check {
     // Same options as Checkstyle
   }
   
-  // FindBugs configuration (Deprecated)
+  // FindBugs configuration
   findbugs {
-    // Same options as Checkstyle
-  }
-  
-  // SpotBugs configuration
-  spotbugs {
     // Same options as Checkstyle
   }
   
@@ -126,7 +121,7 @@ Original work licensed under [MIT license][8].
 [11]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master
 [12]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev
 [13]: https://travis-ci.org/Simdea/android-quality-verifier
-[14]: https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg
-[15]: https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion
+[14]: https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg?version=3.5.8
+[15]: https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/3.5.8/link
 [16]: https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg
 [17]: https://www.gitcheese.com/donate/users/1757083/repos/87924699
