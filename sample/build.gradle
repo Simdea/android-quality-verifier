@@ -12,6 +12,11 @@ android {
         targetSdkVersion 25
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     lintOptions {
         abortOnError false
     }
@@ -43,7 +48,6 @@ check {
     }
 
     pmd {
-        skip true
         abortOnError false
         reportHTML new File(project.buildDir, 'reports/pmd/pmd.html')
     }

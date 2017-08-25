@@ -8,7 +8,6 @@ dependencies {
     compile('com.puppycrawl.tools:checkstyle:8.1') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
-        exclude group: 'org.ow2.asm'
     }
     // FindBugs
     //compile 'com.google.code.findbugs:findbugs:3.0.1'
@@ -18,9 +17,7 @@ dependencies {
     compile 'com.github.spotbugs:spotbugs-annotations:3.1.0-RC5'
     compile 'com.github.spotbugs:spotbugs-archetype:0.1.0'
     // PMD
-    compile ('net.sourceforge.pmd:pmd-java:5.8.1') {
-        exclude group: 'org.ow2.asm'
-    }
+    compile 'net.sourceforge.pmd:pmd-java:5.8.1'
 }
 
 project.ext {
@@ -29,7 +26,7 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.5.9-pre33"
+    version = "3.5.9-pre34"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
     tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'quality']
