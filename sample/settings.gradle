@@ -1,2 +1,0 @@
-include ':app', ':verifier-annotations'
-rootProject.name = 'sample'

@@ -19,6 +19,7 @@ class CheckPlugin implements Plugin<Project> {
         target.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
 
         new FindbugsCheck().apply(target)
+        //new SpotbugsCheck().apply(target)
         new PmdCheck().apply(target)
         new CpdCheck().apply(target)
         //addLint(target, target.check)
