@@ -5,19 +5,21 @@ repositories { jcenter() }
 dependencies {
     compileOnly gradleApi()
     // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:8.1') {
+    compile('com.puppycrawl.tools:checkstyle:8.2') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
     // FindBugs
-    //compile 'com.google.code.findbugs:findbugs:3.0.1'
+    compile 'com.google.code.findbugs:findbugs:3.0.1'
     // SpotBugs
-    compile 'com.github.spotbugs:spotbugs:3.1.0-RC5'
-    compile 'com.github.spotbugs:spotbugs-ant:3.1.0-RC5'
-    compile 'com.github.spotbugs:spotbugs-annotations:3.1.0-RC5'
-    compile 'com.github.spotbugs:spotbugs-archetype:0.1.0'
+    //compile 'com.github.spotbugs:spotbugs:3.1.0-RC5'
+    //compile 'com.github.spotbugs:spotbugs-ant:3.1.0-RC5'
+    //compile 'com.github.spotbugs:spotbugs-annotations:3.1.0-RC5'
+    //compile 'com.github.spotbugs:spotbugs-archetype:0.1.0'
     // PMD
     compile 'net.sourceforge.pmd:pmd-java:5.8.1'
+    // Error Prone
+    compile 'com.google.errorprone:error_prone_ant:2.1.1'
 }
 
 project.ext {
@@ -26,7 +28,7 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.5.9-pre34"
+    version = "3.5.8"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
     tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'quality']

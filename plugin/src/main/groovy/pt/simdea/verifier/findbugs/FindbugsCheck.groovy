@@ -9,7 +9,6 @@ import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
 import pt.simdea.verifier.CommonConfig
 
-@Deprecated
 class FindbugsCheck extends CommonCheck {
 
     FindbugsCheck() { super('findbugs', 'androidFindbugs', 'Runs Android FindBugs') }
