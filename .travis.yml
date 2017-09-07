@@ -1,10 +1,42 @@
 language: java
+language: android
 jdk: oraclejdk8
+
+before_cache:
+  # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    # Gradle dependencies
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+    # Android build cache (see http://tools.android.com/tech-docs/build-cache)
+    - $HOME/.android/build-cache
+
+android:
+  components:
+    - tools
+    - build-tools-25.0.3
+    - platform-tools
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-google-android-support
+    - android-25
+    - sys-img-armeabi-v7a-android-25
+
+licenses:
+  - 'android-sdk-preview-license-.+'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
 branches:
   except:
     - /^[0-9]/ # Workaround to not to trigger Travis with tags - https://github.com/travis-ci/travis-ci/issues/1532
 before_install:
-  - printf "bintray.user=$BINTRAY_USER\nbintray.key=$BINTRAY_KEY\ngradle.publish.key=$GRADLE_PUBLISH_KEY\ngradle.publish.secret=$GRADLE_PUBLISH_SECRET\n" > gradle.properties
+  - printf "bintrayUser=$BINTRAY_USER\nbintrayKey=$BINTRAY_KEY\ngradle.publish.key=$GRADLE_PUBLISH_KEY\ngradle.publish.secret=$GRADLE_PUBLISH_SECRET\n" > gradle.properties
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -19,12 +51,11 @@ before_script:
         exit 1
       fi
 script:
-  - ./gradlew clean :plugin:assemble clean :plugin:check
+  - ./gradlew clean assemble clean :plugin:check
 after_success:
   - |
       if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
         echo "CI on master succeded. Executing release tasks..."
         git fetch --unshallow
-        ./gradlew bintrayUpload publishPlugins
-        ./plugin/ci/tag_release.sh
+        ./gradlew bintrayUpload publishPlugins -PbintrayUser="$BINTRAY_USER" -PbintrayKey="$BINTRAY_KEY" -PdryRun=false
       fi

@@ -18,12 +18,11 @@ class CheckstyleCheck extends CommonCheck {
     protected CommonConfig getConfig(CheckExtension extension) { return extension.checkstyle }
 
     @Override
-    protected void performCheck(Project project, List<File> sources,
-                                File configFile, File xmlReportFile) {
+    protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
         CheckstyleAntTask checkStyleTask = new CheckstyleAntTask()
 
         checkStyleTask.project = project.ant.antProject
-        checkStyleTask.configURL = configFile.toURI().toURL()
+        checkStyleTask.config = configFile.toURI().toURL()
         checkStyleTask.addFormatter(new Formatter(type: new FormatterType(value: 'xml'), tofile: xmlReportFile))
         File file = new File(project.buildDir, "tmp/android-check/checkstyle-suppress.xml")
         file.parentFile.mkdirs()

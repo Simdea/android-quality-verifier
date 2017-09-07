@@ -1,0 +1,78 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+project.ext {
+    plugin = 'pt.simdea.verifier'
+    name = 'Android Quality Verifier Plugin'
+    description = 'Static code analysis plugin for Android projects.'
+    groupId = 'pt.simdea.verifier'
+    artifactId = 'verifier'
+    version = "3.5.1"
+    website = 'https://github.com/simdea/android-quality-verifier'
+    scm = 'https://github.com/simdea/android-quality-verifier'
+    tags = ['android', 'verifier', 'check', 'checkstyle', 'findbugs', 'pmd', 'lint', 'quality']
+    pom = {
+        licenses {
+            license {
+                name 'The MIT License (MIT)'
+                url 'https://opensource.org/licenses/MIT'
+                distribution 'repo'
+            }
+        }
+        scm {
+            url project.ext.scm
+            connection 'scm:git@github.com:simdea/android-quality-verifier.git'
+            developerConnection 'scm:git@github.com:simdea/android-quality-verifier.git'
+        }
+        issueManagement {
+            system 'GitHub'
+            url "${project.ext.scm}/issues"
+        }
+        developers {
+            developer {
+                name 'Simdea'
+                url 'https://www.simdea.pt'
+                roles {
+                    role 'developer'
+                }
+            }
+        }
+    }
+}
+publish {
+    userOrg = 'simdea'
+    groupId = 'pt.simdea.verifier.annotations'
+    artifactId = 'verifier-annotations'
+    publishVersion = '0.0.3'
+    repoName = 'android-quality-verifier'
+    repository = project.ext.scm
+    issueTracker = "${project.ext.scm}/issues"
+    website = 'https://github.com/novoda/bintray-release'
+    licences = ['MIT']
+}
+

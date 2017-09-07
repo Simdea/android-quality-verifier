@@ -22,8 +22,7 @@ abstract class CommonCheck<Config extends CommonConfig> {
 
     protected abstract Config getConfig(CheckExtension extension)
 
-    protected abstract void performCheck(Project project, List<File> sources,
-                                         File configFile, File xmlReportFile)
+    protected abstract void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile)
 
     protected abstract int getErrorCount(File xmlReportFile)
 
@@ -67,8 +66,7 @@ abstract class CommonCheck<Config extends CommonConfig> {
                             Desktop.getDesktop().browse(new URI("file://" + htmlReportFile.absolutePath))
                         } else {
                             target.logger.warn "Your system does not support java.awt.Desktop. " +
-                                    "Not opening report automatically. " +
-                                    "See https://github.com/stoyicker/android-check-2/issues/42"
+                                    "Not opening report automatically."
                         }
                         throw new GradleException(errorMessage)
                     } else {

@@ -5,3 +5,7 @@
 build
 .idea
 *.iml
+fixCommits.sh
+gen/
+sample/gen/
+sample/gen/

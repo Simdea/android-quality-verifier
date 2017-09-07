@@ -3,6 +3,7 @@ package pt.simdea.verifier
 import org.gradle.api.Action
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleConfig
+import pt.simdea.verifier.cpd.CpdConfig
 import pt.simdea.verifier.findbugs.FindbugsConfig
 import pt.simdea.verifier.pmd.PmdConfig
 
@@ -20,15 +21,25 @@ class CheckExtension {
 
     void findbugs(Action<FindbugsConfig> action) { action.execute(findbugs) }
 
+    //SpotbugsConfig spotbugs
+
+    //void spotbugs(Action<SpotbugsConfig> action) { action.execute(spotbugs) }
+
     PmdConfig pmd
 
     void pmd(Action<PmdConfig> action) { action.execute(pmd) }
+
+    CpdConfig cpd
+
+    void cpd(Action<CpdConfig> action) { action.execute(cpd) }
 
     CheckExtension(Project project) {
         this.project = project
         this.checkstyle = new CheckstyleConfig(project)
         this.findbugs = new FindbugsConfig(project)
+        //this.spotbugs = new SpotbugsConfig(project)
         this.pmd = new PmdConfig(project)
+        this.cpd = new CpdConfig(project)
     }
 
     boolean skip = false
@@ -44,23 +55,23 @@ class CheckExtension {
 
         boolean checkAllWarnings
 
+        Set<String> disable
+
         boolean checkReleaseBuilds
 
-        File htmlOutput
-
-        boolean htmlReport
+        File reportHTML
 
         boolean ignoreWarnings
 
-        File lintConfig
+        File config
 
         boolean showAll
 
         boolean warningsAsErrors
 
-        File xmlOutput
+        File reportXML
 
-        boolean xmlReport
+        boolean skip
     }
 
 }
