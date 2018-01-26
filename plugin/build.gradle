@@ -4,22 +4,23 @@ repositories { jcenter() }
 
 dependencies {
     compileOnly gradleApi()
+
     // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:8.2') {
+    implementation('com.puppycrawl.tools:checkstyle:8.7') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
     // FindBugs
-    compile 'com.google.code.findbugs:findbugs:3.0.1'
+    implementation 'com.google.code.findbugs:findbugs:3.0.1'
     // SpotBugs
-    //compile 'com.github.spotbugs:spotbugs:3.1.0-RC5'
-    //compile 'com.github.spotbugs:spotbugs-ant:3.1.0-RC5'
-    //compile 'com.github.spotbugs:spotbugs-annotations:3.1.0-RC5'
+    //compile 'com.github.spotbugs:spotbugs:3.1.1'
+    //compile 'com.github.spotbugs:spotbugs-ant:3.1.1'
+    //compile 'com.github.spotbugs:spotbugs-annotations:3.1.1'
     //compile 'com.github.spotbugs:spotbugs-archetype:0.1.0'
     // PMD
-    compile 'net.sourceforge.pmd:pmd-java:5.8.1'
+    implementation 'net.sourceforge.pmd:pmd-java:6.0.1'
     // Error Prone
-    compile 'com.google.errorprone:error_prone_ant:2.1.1'
+    implementation 'com.google.errorprone:error_prone_ant:2.1.1'
 }
 
 project.ext {

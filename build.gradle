@@ -9,8 +9,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-alpha8'
-        classpath 'pt.simdea.verifier:verifier:3.5.9-pre34'
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'pt.simdea.verifier:verifier:3.5.9'
         classpath 'com.novoda:bintray-release:0.5.0'
     }
 }
