@@ -1,5 +1,24 @@
+/*buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath files("$project.rootDir/plugin/build/libs/plugin-all.jar")
+    }
+}
+
+allprojects {
+    repositories { jcenter() }
+}*/
+
 apply plugin: 'com.android.application'
-apply plugin: 'pt.simdea.verifier'
+//apply plugin: 'pt.simdea.verifier'
 
 android {
     compileSdkVersion 27
@@ -23,13 +42,13 @@ android {
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-api:1.7.12'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
     implementation ('com.github.tony19:logback-android-classic:1.1.1-4')  {
         exclude group: 'com.google.android'
     }
 }
 
-check {
+/*check {
     abortOnError false
 
     checkstyle {
@@ -37,18 +56,18 @@ check {
         abortOnError false
     }
 
-    findbugs {
+    /*findbugs {
         abortOnError false
         reportXML new File(project.buildDir, 'reports/findbugs/findbugs.xml')
-    }
+    }*
 
-    /*spotbugs {
+    spotbugs {
         abortOnError false
         reportXML new File(project.buildDir, 'reports/spotbugs/spotbugs.xml')
-    }*/
+    }
 
     pmd {
         abortOnError false
         reportHTML new File(project.buildDir, 'reports/pmd/pmd.html')
     }
-}
+}*/

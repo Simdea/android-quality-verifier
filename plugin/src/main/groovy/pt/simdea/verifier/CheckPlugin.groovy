@@ -4,33 +4,41 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleCheck
 import pt.simdea.verifier.cpd.CpdCheck
-import pt.simdea.verifier.findbugs.FindbugsCheck
 import pt.simdea.verifier.pmd.PmdCheck
+import pt.simdea.verifier.spotbugs.SpotbugsCheck
 
 class CheckPlugin implements Plugin<Project> {
 
     @Override
-    void apply(Project target) {
-        target.extensions.create(CheckExtension.NAME, CheckExtension, target)
-        target.check.extensions.create('lint', CheckExtension.Lint)
+    void apply(Project rootProject) {
+        rootProject.extensions.create(CheckExtension.NAME, CheckExtension, rootProject)
+        rootProject.check.extensions.create('lint', CheckExtension.Lint)
+        rootProject.repositories.add(rootProject.getRepositories().jcenter())
+        rootProject.dependencies.add("api", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
+        rootProject.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
 
-        target.repositories.add(target.getRepositories().jcenter())
-        target.dependencies.add("api", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
-        target.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
+        def hasSubProjects = rootProject.subprojects.size() > 0
 
-        new FindbugsCheck().apply(target)
-        //new SpotbugsCheck().apply(target)
-        new PmdCheck().apply(target)
-        new CpdCheck().apply(target)
-        //addLint(target, target.check)
-        target.subprojects { subProject ->
-            afterEvaluate {
-                def extension = target.check
-
-                addLint(subProject, extension)
+        if (hasSubProjects) {
+            rootProject.subprojects { subProject ->
+                afterEvaluate {
+                    addTool(subProject, rootProject, rootProject.check)
+                }
+            }
+        } else {
+            rootProject.afterEvaluate {
+                addTool(rootProject, rootProject, rootProject.check)
             }
         }
-        new CheckstyleCheck().apply(target)
+    }
+
+    private static void addTool(final Project project, final Project rootProject, final CheckExtension extension) {
+        new CheckstyleCheck().apply(rootProject)
+        new PmdCheck().apply(rootProject)
+        new CpdCheck().apply(rootProject)
+        // Those static code tools take the longest hence we'll add them at the end.
+        //addLint(project, extension)
+        new SpotbugsCheck().apply(rootProject)
     }
 
     static boolean addLint(final Project subProject, final CheckExtension extension) {

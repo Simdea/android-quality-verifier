@@ -57,7 +57,8 @@ class SpotbugsCheck extends CommonCheck {
             }
         }
 
-        spotBugsTask.addFileset(project.ant.fileset(dir: project.buildDir, includes: includes.join(',')))
+
+        spotBugsTask.addFileset()
 
         spotBugsTask.perform()
     }
