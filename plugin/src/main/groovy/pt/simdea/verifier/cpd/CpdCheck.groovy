@@ -5,35 +5,46 @@ import net.sourceforge.pmd.cpd.CPDTask
 import org.gradle.api.Project
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
-import pt.simdea.verifier.CommonConfig
+import pt.simdea.verifier.Utils
 
-class CpdCheck extends CommonCheck {
+class CpdCheck extends CommonCheck<CpdConfig> {
 
     CpdCheck() { super('cpd', 'androidCpd', 'Runs Android CPD') }
 
     @Override
-    protected CommonConfig getConfig(CheckExtension extension) { return extension.cpd }
+    protected CpdConfig getConfig(CheckExtension extension) { return extension.cpd }
 
     @Override
-    protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
-        CPDTask cpdTask = new CPDTask()
+    void run(Project project, Project rootProject, CpdConfig config) {
+        project.plugins.apply('cpd')
 
-        cpdTask.project = project.ant.antProject
-        cpdTask.minimumTokenCount = 100
-        cpdTask.outputFile = xmlReportFile
-        cpdTask.format = CPDTask.FormatAttribute.getInstance(CPDTask.FormatAttribute, "xml")
-
-        sources.findAll { it.exists() }.each {
-            cpdTask.addFileset(project.ant.fileset(dir: it))
+        project.cpd {
+            language = config.language
         }
 
-        cpdTask.perform()
+        project.cpdCheck {
+            description = taskDescription
+
+            reports {
+                xml.enabled = xmlReportFile
+            }
+            encoding = 'UTF-8'
+            format = CPDTask.FormatAttribute.getInstance(CPDTask.FormatAttribute, "xml")
+            source = project.fileTree(config.getAndroidSources())
+            minimumTokenCount = config.minimumTokenCount
+            ignoreFailures = false
+        }
     }
 
     @Override
     protected int getErrorCount(File xmlReportFile) {
         GPathResult xml = new XmlSlurper().parseText(xmlReportFile.text)
         return xml.file.inject(0) { count, file -> count + file.violation.size() }
+    }
+
+    @Override
+    protected boolean isSupported(Project project) {
+        return Utils.isJavaProject(project) || Utils.isAndroidProject(project)
     }
 
     @Override

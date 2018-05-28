@@ -1,43 +1,56 @@
 package pt.simdea.verifier.pmd
 
 import groovy.util.slurpersupport.GPathResult
-import net.sourceforge.pmd.ant.Formatter
-import net.sourceforge.pmd.ant.PMDTask
 import org.gradle.api.Project
+import org.gradle.api.plugins.quality.Pmd
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
-import pt.simdea.verifier.CommonConfig
+import pt.simdea.verifier.Utils
 
-class PmdCheck extends CommonCheck {
+class PmdCheck extends CommonCheck<PmdConfig> {
 
     PmdCheck() { super('pmd', 'androidPmd', 'Runs Android PMD') }
 
     @Override
-    protected CommonConfig getConfig(CheckExtension extension) { return extension.pmd }
+    protected PmdConfig getConfig(CheckExtension extension) { return extension.pmd }
 
     @Override
-    protected void performCheck(Project project, List<File> sources,
-                                File configFile, File xmlReportFile) {
-        PMDTask pmdTask = new PMDTask()
+    void run(Project project, Project rootProject, PmdConfig config) {
+        project.plugins.apply(taskCode)
 
-        pmdTask.project = project.ant.antProject
-        pmdTask.ruleSetFiles = configFile.toString()
-        pmdTask.addFormatter(new Formatter(type: 'xml', toFile: xmlReportFile))
-
-        pmdTask.failOnError = false
-        pmdTask.failOnRuleViolation = false
-
-        sources.findAll { it.exists() }.each {
-            pmdTask.addFileset(project.ant.fileset(dir: it))
+        project.pmd {
+            ruleSetFiles = config.resolveConfigFile(taskCode)
         }
 
-        pmdTask.perform()
+        project.task(taskName, type: Pmd) {
+            description = taskDescription
+
+            ruleSets = []
+
+            failOnError = false
+            failOnRuleViolation = false
+
+            source = project.fileTree(config.getAndroidSources())
+            include config.include
+            exclude config.exclude
+
+            reports {
+                html.enabled = htmlReportFile
+                xml.enabled = xmlReportFile
+            }
+        }
+
     }
 
     @Override
     protected int getErrorCount(File xmlReportFile) {
         GPathResult xml = new XmlSlurper().parseText(xmlReportFile.text)
         return xml.file.inject(0) { count, file -> count + file.violation.size() }
+    }
+
+    @Override
+    protected boolean isSupported(Project project) {
+        return Utils.isJavaProject(project) || Utils.isAndroidProject(project)
     }
 
     @Override

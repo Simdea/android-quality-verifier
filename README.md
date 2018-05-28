@@ -44,7 +44,7 @@ The default one.
 
 ### Customized
 
-```js
+```groovy
 // Configuration is completely optional, defaults will be used if not present
 check {
   // Do absolutely nothing, default: false

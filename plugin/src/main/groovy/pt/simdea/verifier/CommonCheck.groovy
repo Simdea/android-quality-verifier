@@ -4,27 +4,35 @@ import org.gradle.api.GradleException
 import org.gradle.api.Project
 
 import java.awt.*
-import java.util.List
 
 abstract class CommonCheck<Config extends CommonConfig> {
 
     final String taskCode
     final String taskName
     final String taskDescription
+    final File htmlReportFile
+    final File xmlReportFile
 
     CommonCheck(String taskCode, String taskName, String taskDescription) {
         this.taskCode = taskCode
         this.taskName = taskName
         this.taskDescription = taskDescription
+
+        xmlReportFile = getConfig().resolveXmlReportFile(taskCode)
+        xmlReportFile.parentFile.mkdirs()
+        htmlReportFile = getConfig().resolveHtmlReportFile(taskCode)
+        htmlReportFile.parentFile.mkdirs()
     }
 
     protected Set<String> getDependencies() { [] }
 
     protected abstract Config getConfig(CheckExtension extension)
 
-    protected abstract void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile)
+    protected abstract void run(Project project, Project rootProject, Config config)
 
     protected abstract int getErrorCount(File xmlReportFile)
+
+    protected abstract boolean isSupported(Project project)
 
     protected abstract String getErrorMessage(int errorCount, File htmlReportFile)
 
@@ -34,55 +42,48 @@ abstract class CommonCheck<Config extends CommonConfig> {
         }
     }
 
-    void apply(Project target) {
-        target.task(
-                [group      : 'verification',
-                 description: taskDescription],
-                taskName).doLast {
-            CheckExtension extension = target.extensions.findByType(CheckExtension)
-            Config config = getConfig(extension)
+    void apply(Project target, Project rootProject) {
+        CheckExtension extension = target.extensions.findByType(CheckExtension)
+        Config config = getConfig(extension)
 
-            boolean skip = config.resolveSkip(extension.skip)
-            boolean abortOnError = config.resolveAbortOnError(extension.abortOnError)
-            File configFile = config.resolveConfigFile(taskCode)
-            File styleFile = config.resolveStyleFile(taskCode)
-            File xmlReportFile = config.resolveXmlReportFile(taskCode)
-            File htmlReportFile = config.resolveHtmlReportFile(taskCode)
-            List<File> sources = config.getAndroidSources()
+        def isNotIgnored = !config.skip
 
-            if (skip) {
-                target.logger.warn "skip $taskName"
+        if (isNotIgnored && isSupported()) {
+
+            run(target, rootProject, config)
+
+            reformatAndReportErrors(target, config)
+
+            if (target.tasks.find({ it.name == 'check' }) != null) {
+                target.tasks.getByName('check').dependsOn taskName
             } else {
-                xmlReportFile.parentFile.mkdirs()
-                performCheck(target, sources, configFile, xmlReportFile)
-                htmlReportFile.parentFile.mkdirs()
-                reformatReport(target, styleFile, xmlReportFile, htmlReportFile)
+                target.logger.warn "task check not found in" +
+                        " project $target.name. You may need to run the plugin tasks manually"
+            }
+            dependencies.each { target.tasks.getByName(taskName).dependsOn it }
+        }
+    }
 
-                int errorCount = getErrorCount(xmlReportFile)
-                if (errorCount) {
-                    String errorMessage = getErrorMessage(errorCount, htmlReportFile)
-                    if (abortOnError) {
-                        if (Desktop.isDesktopSupported()) {
-                            Desktop.getDesktop().browse(new URI("file://" + htmlReportFile.absolutePath))
-                        } else {
-                            target.logger.warn "Your system does not support java.awt.Desktop. " +
-                                    "Not opening report automatically."
-                        }
-                        throw new GradleException(errorMessage)
+    protected void reformatAndReportErrors(Project project, Config config) {
+        if (config.shouldResolveErrors()) {
+            reformatReport(project, config.resolveStyleFile(taskCode), xmlReportFile, htmlReportFile)
+            CheckExtension extension = project.extensions.findByType(CheckExtension)
+
+            int errorCount = getErrorCount(xmlReportFile)
+            if (errorCount) {
+                String errorMessage = getErrorMessage(errorCount, htmlReportFile)
+                if (config.resolveAbortOnError(extension.abortOnError)) {
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop.getDesktop().browse(new URI("file://" + htmlReportFile.absolutePath))
                     } else {
-                        target.logger.warn errorMessage
+                        project.logger.warn "Your system does not support java.awt.Desktop. " +
+                                "Not opening report automatically."
                     }
+                    throw new GradleException(errorMessage)
+                } else {
+                    project.logger.warn errorMessage
                 }
             }
         }
-
-        if (target.tasks.find({ it.name == 'check' }) != null) {
-            target.tasks.getByName('check').dependsOn taskName
-        } else {
-            target.logger.warn "task check not found in" +
-                    " project $target.name. You may need to run the plugin tasks manually"
-        }
-        dependencies.each { target.tasks.getByName(taskName).dependsOn it }
     }
-
 }
