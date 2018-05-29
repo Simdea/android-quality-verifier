@@ -1,30 +1,36 @@
 package pt.simdea.verifier.errorprone
 
-import com.google.errorprone.ErrorProneAntCompilerAdapter
+
 import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.Project
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
-import pt.simdea.verifier.CommonConfig
+import pt.simdea.verifier.Utils
 
-class ErrorProneCheck extends CommonCheck {
+class ErrorProneCheck extends CommonCheck<ErrorProneConfig> {
 
-    ErrorProneCheck() { super('cpd', 'androidCpd', 'Runs Android CPD') }
-
-    @Override
-    protected CommonConfig getConfig(CheckExtension extension) { return extension.cpd }
+    ErrorProneCheck() { super('errorProne', 'androidErrorProne', 'Runs Android CPD') }
 
     @Override
-    protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
-        ErrorProneAntCompilerAdapter adapter = new ErrorProneAntCompilerAdapter()
+    protected ErrorProneConfig getConfig(CheckExtension extension) { return extension.errorProne }
 
-        adapter.execute()
+    @Override
+    protected void run(Project project, Project rootProject, ErrorProneConfig config) {
+        project.plugins.apply('net.ltgt.errorprone')
+        project.configurations.errorprone {
+            resolutionStrategy.force "com.google.errorprone:error_prone_core:${extension.errorProne.toolVersion}"
+        }
     }
 
     @Override
     protected int getErrorCount(File xmlReportFile) {
         GPathResult xml = new XmlSlurper().parseText(xmlReportFile.text)
         return xml.file.inject(0) { count, file -> count + file.violation.size() }
+    }
+
+    @Override
+    protected boolean isSupported(Project project) {
+        return Utils.isJavaProject(project) || Utils.isAndroidProject(project)
     }
 
     @Override

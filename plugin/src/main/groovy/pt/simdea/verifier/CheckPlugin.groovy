@@ -4,6 +4,10 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleCheck
 import pt.simdea.verifier.cpd.CpdCheck
+import pt.simdea.verifier.detekt.DetektCheck
+import pt.simdea.verifier.errorprone.ErrorProneCheck
+import pt.simdea.verifier.ktlint.KtLintCheck
+import pt.simdea.verifier.lint.LintCheck
 import pt.simdea.verifier.pmd.PmdCheck
 import pt.simdea.verifier.spotbugs.SpotBugsCheck
 
@@ -21,23 +25,25 @@ class CheckPlugin implements Plugin<Project> {
         if (hasSubProjects) {
             rootProject.subprojects { subProject ->
                 afterEvaluate {
-                    addTool(subProject, rootProject, rootProject.check)
+                    addTool(subProject, rootProject)
                 }
             }
         } else {
             rootProject.afterEvaluate {
-                addTool(rootProject, rootProject, rootProject.check)
+                addTool(rootProject, rootProject)
             }
         }
     }
 
     private static void addTool(final Project project, final Project rootProject) {
         new PmdCheck().apply(project, rootProject)
-        new CheckstyleCheck().apply(rootProject, rootProject)
-        new CpdCheck().apply(rootProject, rootProject)
-        // Those static code tools take the longest hence we'll add them at the end.
-        addLint(project, extension)
-        new SpotBugsCheck().apply(rootProject, rootProject)
+        new CheckstyleCheck().apply(project, rootProject)
+        new KtLintCheck().apply(project, rootProject)
+        new CpdCheck().apply(project, rootProject)
+        new DetektCheck().apply(project, rootProject)
+        new ErrorProneCheck().apply(project, rootProject)
+        new LintCheck().apply(project, rootProject)
+        new SpotBugsCheck().apply(project, rootProject)
     }
 
 }
