@@ -7,4 +7,9 @@ class ErrorProneConfig extends CommonConfig {
 
     ErrorProneConfig(Project project) { super(project) }
 
+    @Override
+    boolean shouldResolveErrors() {
+        return false
+    }
+
 }

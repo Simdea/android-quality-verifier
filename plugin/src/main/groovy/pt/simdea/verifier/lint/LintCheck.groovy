@@ -12,9 +12,7 @@ class LintCheck extends CommonCheck<LintConfig> {
     }
 
     @Override
-    protected LintConfig getConfig(CheckExtension extension) {
-        return null
-    }
+    protected LintConfig getConfig(CheckExtension extension) { return extension.lint }
 
     @Override
     protected void run(Project project, Project rootProject, LintConfig config) {

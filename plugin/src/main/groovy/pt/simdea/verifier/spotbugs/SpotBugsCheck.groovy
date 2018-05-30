@@ -1,15 +1,13 @@
 package pt.simdea.verifier.spotbugs
 
-
 import edu.umd.cs.findbugs.FindBugs2
 import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.Project
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
-import pt.simdea.verifier.CommonConfig
 import pt.simdea.verifier.Utils
 
-class SpotBugsCheck extends CommonCheck {
+class SpotBugsCheck extends CommonCheck<SpotBugsConfig> {
 
     SpotBugsCheck() { super('spotbugs', 'androidSpotbugs', 'Runs Android SpotBugs') }
 
@@ -17,12 +15,10 @@ class SpotBugsCheck extends CommonCheck {
     protected Set<String> getDependencies() { ['assemble'] }
 
     @Override
-    protected CommonConfig getConfig(CheckExtension extension) { return extension.spotbugs }
+    protected SpotBugsConfig getConfig(CheckExtension extension) { return extension.spotbugs }
 
     @Override
-    void run(Project project, Project rootProject, CommonConfig config) {
-
-        def spotbugsConfig = (SpotBugsConfig) config
+    void run(Project project, Project rootProject, SpotBugsConfig config) {
 
         project.plugins.apply(taskCode)
 
@@ -36,7 +32,7 @@ class SpotBugsCheck extends CommonCheck {
         project.task(taskCode, type: FindBugs2, dependsOn: 'assemble') {
             description = taskDescription
 
-            classes = project.fileTree(project.buildDir).include(spotbugsConfig.getAndroidClasses())
+            classes = project.fileTree(project.buildDir).include(config.getAndroidClasses())
             source = project.fileTree(config.getAndroidSources())
             classpath = project.files()
 

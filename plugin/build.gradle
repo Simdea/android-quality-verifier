@@ -36,10 +36,10 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.6.0-alpha1"
+    version = "4.0.0-alpha1"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
-    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'quality']
+    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'ktlint', 'detekt', 'error prone', 'quality']
     pom = {
         licenses {
             license {

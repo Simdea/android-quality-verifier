@@ -18,7 +18,7 @@ class ErrorProneCheck extends CommonCheck<ErrorProneConfig> {
     protected void run(Project project, Project rootProject, ErrorProneConfig config) {
         project.plugins.apply('net.ltgt.errorprone')
         project.configurations.errorprone {
-            resolutionStrategy.force "com.google.errorprone:error_prone_core:${extension.errorProne.toolVersion}"
+            resolutionStrategy.force "com.google.errorprone:error_prone_core:2.3.1"
         }
     }
 
