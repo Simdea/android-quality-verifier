@@ -10,18 +10,13 @@ abstract class CommonCheck<Config extends CommonConfig> {
     final String taskCode
     final String taskName
     final String taskDescription
-    final File htmlReportFile
-    final File xmlReportFile
+    File htmlReportFile
+    File xmlReportFile
 
     CommonCheck(String taskCode, String taskName, String taskDescription) {
         this.taskCode = taskCode
         this.taskName = taskName
         this.taskDescription = taskDescription
-
-        xmlReportFile = getConfig().resolveXmlReportFile(taskCode)
-        xmlReportFile.parentFile.mkdirs()
-        htmlReportFile = getConfig().resolveHtmlReportFile(taskCode)
-        htmlReportFile.parentFile.mkdirs()
     }
 
     protected Set<String> getDependencies() { [] }
@@ -46,9 +41,16 @@ abstract class CommonCheck<Config extends CommonConfig> {
         CheckExtension extension = target.extensions.findByType(CheckExtension)
         Config config = getConfig(extension)
 
+        File configFile = config.resolveConfigFile(taskCode)
+        File styleFile = config.resolveStyleFile(taskCode)
+        xmlReportFile = config.resolveXmlReportFile(taskCode)
+        xmlReportFile.parentFile.mkdirs()
+        htmlReportFile = config.resolveHtmlReportFile(taskCode)
+        htmlReportFile.parentFile.mkdirs()
+
         def isNotIgnored = !config.skip
 
-        if (isNotIgnored && isSupported()) {
+        if (isNotIgnored && isSupported(target)) {
 
             run(target, rootProject, config)
 

@@ -19,7 +19,8 @@ class PmdCheck extends CommonCheck<PmdConfig> {
         project.plugins.apply(taskCode)
 
         project.pmd {
-            ruleSetFiles = config.resolveConfigFile(taskCode)
+            ignoreFailures = false
+            ruleSetFiles = project.files(config.resolveConfigFile(taskCode))
         }
 
         project.task(taskName, type: Pmd) {
@@ -27,17 +28,7 @@ class PmdCheck extends CommonCheck<PmdConfig> {
 
             ruleSets = []
 
-            failOnError = false
-            failOnRuleViolation = false
-
             source = project.fileTree(config.getAndroidSources())
-            include config.include
-            exclude config.exclude
-
-            reports {
-                html.enabled = htmlReportFile
-                xml.enabled = xmlReportFile
-            }
         }
 
     }
