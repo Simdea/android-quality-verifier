@@ -29,6 +29,8 @@ abstract class CommonCheck<Config extends CommonConfig> {
 
     protected abstract boolean isSupported(Project project)
 
+    protected abstract boolean isTask()
+
     protected abstract String getErrorMessage(int errorCount, File htmlReportFile)
 
     protected void reformatReport(Project project, File styleFile, File xmlReportFile, File htmlReportFile) {
@@ -38,6 +40,19 @@ abstract class CommonCheck<Config extends CommonConfig> {
     }
 
     void apply(Project target, Project rootProject) {
+        if (isTask()) {
+            target.task(
+                    [group      : 'verification',
+                     description: taskDescription],
+                    taskName).doLast {
+                next(target, rootProject)
+            }
+        } else {
+            next(target, rootProject)
+        }
+    }
+
+    protected void next(Project target, Project rootProject) {
         CheckExtension extension = target.extensions.findByType(CheckExtension)
         Config config = getConfig(extension)
 
@@ -54,15 +69,17 @@ abstract class CommonCheck<Config extends CommonConfig> {
 
             run(target, rootProject, config)
 
-            reformatAndReportErrors(target, config)
+            if (isTask()) {
+                reformatAndReportErrors(target, config)
 
-            if (target.tasks.find({ it.name == 'check' }) != null) {
-                target.tasks.getByName('check').dependsOn taskName
-            } else {
-                target.logger.warn "task check not found in" +
-                        " project $target.name. You may need to run the plugin tasks manually"
+                if (target.tasks.find({ it.name == 'check' }) != null) {
+                    target.tasks.getByName('check').dependsOn taskName
+                } else {
+                    target.logger.warn "task check not found in" +
+                            " project $target.name. You may need to run the plugin tasks manually"
+                }
+                dependencies.each { target.tasks.getByName(taskName).dependsOn it }
             }
-            dependencies.each { target.tasks.getByName(taskName).dependsOn it }
         }
     }
 

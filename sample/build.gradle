@@ -1,34 +1,16 @@
-/*buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url 'https://maven.google.com'
-        }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath files("$project.rootDir/plugin/build/libs/plugin-all.jar")
-    }
-}
 
-allprojects {
-    repositories { jcenter() }
-}*/
-
-apply plugin: 'com.android.application'
 apply plugin: 'pt.simdea.verifier'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         versionCode 1
         versionName '1.0'
         minSdkVersion 22
-        targetSdkVersion 27
+        targetSdkVersion 28
     }
 
     compileOptions {
@@ -48,26 +30,25 @@ dependencies {
     }
 }
 
-/*check {
+check {
     abortOnError false
 
     checkstyle {
-        skip true
         abortOnError false
     }
-
-    /*findbugs {
-        abortOnError false
-        reportXML new File(project.buildDir, 'reports/findbugs/findbugs.xml')
-    }*
 
     spotbugs {
         abortOnError false
         reportXML new File(project.buildDir, 'reports/spotbugs/spotbugs.xml')
     }
 
+    cpd {
+        abortOnError false
+        reportXML new File(project.buildDir, 'reports/cpd/cpd.xml')
+    }
+
     pmd {
         abortOnError false
         reportHTML new File(project.buildDir, 'reports/pmd/pmd.html')
     }
-}*/
+}

@@ -1,9 +1,11 @@
 package pt.simdea.verifier.checkstyle
 
-
+import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask
+import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.Formatter
+import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.FormatterType
 import groovy.util.slurpersupport.GPathResult
+import org.apache.tools.ant.types.Path
 import org.gradle.api.Project
-import org.gradle.api.plugins.quality.Checkstyle
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
 import pt.simdea.verifier.Utils
@@ -17,33 +19,27 @@ class CheckstyleCheck extends CommonCheck<CheckstyleConfig> {
 
     @Override
     void run(Project project, Project rootProject, CheckstyleConfig config) {
-        project.plugins.apply(taskCode)
+        CheckstyleAntTask checkStyleTask = new CheckstyleAntTask()
 
-        project.checkstyle {
-            configFile config.resolveConfigFile(taskCode)
+        checkStyleTask.project = project.ant.antProject
+        checkStyleTask.config = config.resolveConfigFile(taskCode).toURI().toURL()
+        checkStyleTask.addFormatter(new Formatter(type: new FormatterType(value: 'xml'), tofile: xmlReportFile))
+        File file = new File(project.buildDir, "tmp/android-check/checkstyle-suppress.xml")
+        file.parentFile.mkdirs()
+        file.delete()
+        file << Utils.getResource(project, "checkstyle/suppressions.xml")
+        checkStyleTask.properties = file
+
+        checkStyleTask.failOnViolation = false
+        Path classpath = checkStyleTask.createClasspath()
+        rootProject.files().findAll { it.exists() }.each {
+            classpath.addFileset(project.ant.fileset(dir: it))
+        }
+        config.getAndroidSources().findAll { it.exists() }.each {
+            checkStyleTask.addFileset(project.ant.fileset(dir: it))
         }
 
-        project.task(taskName, type: Checkstyle) {
-            description = taskDescription
-
-            source = project.fileTree(config.getAndroidSources())
-            include['**/*.java']
-            exclude['**/gen/**']
-            failOnViolation = false
-
-            File file = new File(project.buildDir, "tmp/android-check/checkstyle-suppress.xml")
-            file.parentFile.mkdirs()
-            file.delete()
-            file << Utils.getResource(project, "checkstyle/suppressions.xml")
-            properties = file
-
-            classpath = project.files()
-
-            reports {
-                html.enabled = htmlReportFile
-                xml.enabled = xmlReportFile
-            }
-        }
+        checkStyleTask.perform()
     }
 
     @Override
@@ -55,6 +51,11 @@ class CheckstyleCheck extends CommonCheck<CheckstyleConfig> {
     @Override
     protected boolean isSupported(Project project) {
         return Utils.isJavaProject(project) || Utils.isAndroidProject(project)
+    }
+
+    @Override
+    protected boolean isTask() {
+        return true
     }
 
     @Override

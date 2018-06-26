@@ -16,24 +16,20 @@ class CpdCheck extends CommonCheck<CpdConfig> {
 
     @Override
     void run(Project project, Project rootProject, CpdConfig config) {
-        project.plugins.apply('cpd')
+        CPDTask cpdTask = new CPDTask()
 
-        project.cpd {
-            language = config.language
+        cpdTask.project = project.ant.antProject
+        cpdTask.outputFile = xmlReportFile
+        cpdTask.language = config.language
+        cpdTask.minimumTokenCount = config.minimumTokenCount
+        cpdTask.encoding = 'UTF-8'
+        cpdTask.format = CPDTask.FormatAttribute.getInstance(CPDTask.FormatAttribute, "xml")
+
+        config.getAndroidSources().findAll { it.exists() }.each {
+            cpdTask.addFileset(project.ant.fileset(dir: it))
         }
 
-        project.cpdCheck {
-            description = taskDescription
-
-            reports {
-                xml.enabled = xmlReportFile
-            }
-            encoding = 'UTF-8'
-            format = CPDTask.FormatAttribute.getInstance(CPDTask.FormatAttribute, "xml")
-            source = project.fileTree(config.getAndroidSources())
-            minimumTokenCount = config.minimumTokenCount
-            ignoreFailures = false
-        }
+        cpdTask.perform()
     }
 
     @Override
@@ -45,6 +41,11 @@ class CpdCheck extends CommonCheck<CpdConfig> {
     @Override
     protected boolean isSupported(Project project) {
         return Utils.isJavaProject(project) || Utils.isAndroidProject(project)
+    }
+
+    @Override
+    protected boolean isTask() {
+        return true
     }
 
     @Override

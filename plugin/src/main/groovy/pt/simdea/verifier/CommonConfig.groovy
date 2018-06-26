@@ -140,7 +140,9 @@ class CommonConfig {
             return reportFile
         }
 
-        return new File(project.buildDir, "outputs/${code}/${code}.${extension}")
+        File file = new File(project.buildDir, "outputs/${code}/${code}.${extension}")
+        file.parentFile.mkdirs()
+        return file
     }
 
     File resolveXmlReportFile(String code) {

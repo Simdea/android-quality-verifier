@@ -1,7 +1,9 @@
 package pt.simdea.verifier.spotbugs
 
-import edu.umd.cs.findbugs.FindBugs2
+import edu.umd.cs.findbugs.anttask.FindBugsTask as SpotBugsTask
 import groovy.util.slurpersupport.GPathResult
+import org.apache.tools.ant.types.FileSet
+import org.apache.tools.ant.types.Path
 import org.gradle.api.Project
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
@@ -20,27 +22,46 @@ class SpotBugsCheck extends CommonCheck<SpotBugsConfig> {
     @Override
     void run(Project project, Project rootProject, SpotBugsConfig config) {
 
-        project.plugins.apply(taskCode)
+        SpotBugsTask spotBugsTask = new SpotBugsTask()
+        project.ant.lifecycleLogLevel = "VERBOSE"
+        spotBugsTask.project = project.ant.antProject
+        spotBugsTask.workHard = true
+        spotBugsTask.excludeFilter = config.resolveConfigFile(taskCode)
+        spotBugsTask.output = "xml:withMessages"
+        spotBugsTask.outputFile = xmlReportFile
+        spotBugsTask.failOnError = false
+        spotBugsTask.quietErrors = true
+        spotBugsTask.setExitCode = false
 
-        project.findbugs {
-            excludeFilter = config.resolveConfigFile(taskCode)
-            failOnError = false
-            workHard = true
-            output = "xml:withMessages"
+        Path sourcePath = spotBugsTask.createSourcePath()
+        config.getAndroidSources().findAll { it.exists() }.each {
+            sourcePath.addFileset(project.ant.fileset(dir: it))
         }
 
-        project.task(taskCode, type: FindBugs2, dependsOn: 'assemble') {
-            description = taskDescription
 
-            classes = project.fileTree(project.buildDir).include(config.getAndroidClasses())
-            source = project.fileTree(config.getAndroidSources())
-            classpath = project.files()
+        Path classpath = spotBugsTask.createClasspath()
+        project.rootProject.buildscript.configurations.classpath.resolve().each {
+            classpath.createPathElement().location = it
+        }
+        project.buildscript.configurations.classpath.resolve().each {
+            classpath.createPathElement().location = it
+        }
 
-            reports {
-                html.enabled = htmlReportFile
-                xml.enabled = xmlReportFile
+        Set<String> includes = config.androidClasses
+        config.getAndroidSources().findAll { it.exists() }.each { File directory ->
+            FileSet fileSet = project.ant.fileset(dir: directory)
+            Path path = project.ant.path()
+            path.addFileset(fileSet)
+
+            path.each {
+                String includePath = new File(it.toString()).absolutePath - directory.absolutePath
+                includes.add("**${includePath.replaceAll('\\.java$', '')}*")
             }
         }
+
+        spotBugsTask.addFileset(project.ant.fileset(dir: project.buildDir, includes: includes.join(',')))
+
+        spotBugsTask.perform()
     }
 
     @Override
@@ -52,6 +73,11 @@ class SpotBugsCheck extends CommonCheck<SpotBugsConfig> {
     @Override
     protected boolean isSupported(Project project) {
         return Utils.isJavaProject(project) || Utils.isAndroidProject(project) || Utils.isKotlinProject(project)
+    }
+
+    @Override
+    protected boolean isTask() {
+        return true
     }
 
     @Override

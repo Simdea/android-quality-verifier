@@ -34,6 +34,11 @@ class ErrorProneCheck extends CommonCheck<ErrorProneConfig> {
     }
 
     @Override
+    protected boolean isTask() {
+        return false
+    }
+
+    @Override
     protected String getErrorMessage(int errorCount, File htmlReportFile) {
         return "$errorCount CPD rule violations were found. See the report at: ${htmlReportFile.toURI()}"
     }

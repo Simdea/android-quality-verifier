@@ -1,8 +1,9 @@
 package pt.simdea.verifier.pmd
 
 import groovy.util.slurpersupport.GPathResult
+import net.sourceforge.pmd.ant.Formatter
+import net.sourceforge.pmd.ant.PMDTask
 import org.gradle.api.Project
-import org.gradle.api.plugins.quality.Pmd
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
 import pt.simdea.verifier.Utils
@@ -16,20 +17,20 @@ class PmdCheck extends CommonCheck<PmdConfig> {
 
     @Override
     void run(Project project, Project rootProject, PmdConfig config) {
-        project.plugins.apply(taskCode)
+        PMDTask pmdTask = new PMDTask()
 
-        project.pmd {
-            ignoreFailures = false
-            ruleSetFiles = project.files(config.resolveConfigFile(taskCode))
+        pmdTask.project = project.ant.antProject
+        pmdTask.ruleSetFiles = config.resolveConfigFile(taskCode).toString()
+        pmdTask.addFormatter(new Formatter(type: 'xml', toFile: xmlReportFile))
+
+        pmdTask.failOnError = false
+        pmdTask.failOnRuleViolation = false
+
+        config.getAndroidSources().findAll { it.exists() }.each {
+            pmdTask.addFileset(project.ant.fileset(dir: it))
         }
 
-        project.task(taskName, type: Pmd) {
-            description = taskDescription
-
-            ruleSets = []
-
-            source = project.fileTree(config.getAndroidSources())
-        }
+        pmdTask.perform()
 
     }
 
@@ -42,6 +43,11 @@ class PmdCheck extends CommonCheck<PmdConfig> {
     @Override
     protected boolean isSupported(Project project) {
         return Utils.isJavaProject(project) || Utils.isAndroidProject(project)
+    }
+
+    @Override
+    protected boolean isTask() {
+        return true
     }
 
     @Override

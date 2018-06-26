@@ -15,6 +15,8 @@ class LintConfig extends CommonConfig {
 
     boolean checkReleaseBuilds
 
+    File lintConfig
+
     boolean ignoreWarnings
 
     boolean showAll

@@ -17,8 +17,6 @@ class CheckPlugin implements Plugin<Project> {
     void apply(Project rootProject) {
         rootProject.extensions.create(CheckExtension.NAME, CheckExtension, rootProject)
         rootProject.repositories.add(rootProject.getRepositories().jcenter())
-        rootProject.dependencies.add("api", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
-        rootProject.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
 
         def hasSubProjects = rootProject.subprojects.size() > 0
 

@@ -8,7 +8,7 @@ import pt.simdea.verifier.Utils
 class LintCheck extends CommonCheck<LintConfig> {
 
     LintCheck() {
-        super('lint', 'lint', 'Android Lint')
+        super('lintCheck', 'lintCheck', 'Android Lint')
     }
 
     @Override
@@ -40,7 +40,7 @@ class LintCheck extends CommonCheck<LintConfig> {
 
         if (config.lintConfig != null) {
             project.android.lintOptions {
-                lintConfig config.config
+                lintConfig config.lintConfig
             }
         }
 
@@ -73,6 +73,11 @@ class LintCheck extends CommonCheck<LintConfig> {
     @Override
     protected boolean isSupported(Project project) {
         return Utils.isAndroidProject(project)
+    }
+
+    @Override
+    protected boolean isTask() {
+        return false
     }
 
     @Override

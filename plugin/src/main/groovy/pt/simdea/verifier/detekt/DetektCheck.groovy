@@ -55,6 +55,11 @@ class DetektCheck extends CommonCheck<DetektConfig> {
     }
 
     @Override
+    protected boolean isTask() {
+        return false
+    }
+
+    @Override
     protected String getErrorMessage(int errorCount, File htmlReportFile) {
         return null
     }
