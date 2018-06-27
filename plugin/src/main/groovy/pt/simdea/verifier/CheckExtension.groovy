@@ -5,7 +5,6 @@ import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleConfig
 import pt.simdea.verifier.cpd.CpdConfig
 import pt.simdea.verifier.detekt.DetektConfig
-import pt.simdea.verifier.errorprone.ErrorProneConfig
 import pt.simdea.verifier.ktlint.KtLintConfig
 import pt.simdea.verifier.lint.LintConfig
 import pt.simdea.verifier.pmd.PmdConfig
@@ -45,9 +44,9 @@ class CheckExtension {
 
     void detekt(Action<DetektConfig> action) { action.execute(detekt) }
 
-    ErrorProneConfig errorProne
+    //ErrorProneConfig errorProne
 
-    void errorProne(Action<ErrorProneConfig> action) { action.execute(errorProne) }
+    //void errorProne(Action<ErrorProneConfig> action) { action.execute(errorProne) }
 
     CheckExtension(Project project) {
         this.project = project
@@ -58,7 +57,7 @@ class CheckExtension {
         lint = new LintConfig(project)
         ktLint = new KtLintConfig(project)
         detekt = new DetektConfig(project)
-        errorProne = new ErrorProneConfig(project)
+        //errorProne = new ErrorProneConfig(project)
     }
 
     boolean skip = false

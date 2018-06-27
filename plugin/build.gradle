@@ -11,7 +11,7 @@ dependencies {
     compileOnly gradleApi()
 
     // Checkstyle
-    compile('com.puppycrawl.tools:checkstyle:8.7') {
+    compile('com.puppycrawl.tools:checkstyle:8.10.1') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
@@ -27,7 +27,7 @@ dependencies {
     // Error Prone
     compile 'com.google.errorprone:error_prone_ant:2.3.1'
     ktlint "com.github.shyiko:ktlint:0.23.1"
-    detektCheck "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC7"
+    compile "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC7"
 }
 
 project.ext {

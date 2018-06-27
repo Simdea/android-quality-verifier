@@ -37,6 +37,13 @@ buildscript {
 ##### add to app build.gradle:
 ```gradle
 apply plugin: 'pt.simdea.verifier'
+
+dependencies {
+    ...
+    classpath 'pt.simdea.verifier:verifier-annotations:0.0.3'
+    ...
+}
+
 ```
 ### Recommended
 

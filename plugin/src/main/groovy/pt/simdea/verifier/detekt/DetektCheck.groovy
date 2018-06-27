@@ -1,5 +1,6 @@
 package pt.simdea.verifier.detekt
 
+
 import org.gradle.api.Project
 import org.gradle.api.tasks.JavaExec
 import pt.simdea.verifier.CheckExtension
@@ -18,13 +19,6 @@ class DetektCheck extends CommonCheck<DetektConfig> {
 
     @Override
     protected void run(Project project, Project rootProject, DetektConfig config) {
-        project.configurations {
-            detektCheck
-        }
-
-        project.dependencies {
-            detektCheck "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC7"
-        }
 
         def output = new File(project.buildDir, "reports/detekt/")
 
@@ -56,7 +50,7 @@ class DetektCheck extends CommonCheck<DetektConfig> {
 
     @Override
     protected boolean isTask() {
-        return false
+        return true
     }
 
     @Override

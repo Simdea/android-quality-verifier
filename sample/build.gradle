@@ -1,5 +1,5 @@
 
-apply plugin: 'pt.simdea.verifier'
+//apply plugin: 'pt.simdea.verifier'
 apply plugin: 'com.android.application'
 
 android {
@@ -30,7 +30,7 @@ dependencies {
     }
 }
 
-check {
+/*check {
     abortOnError false
 
     checkstyle {
@@ -51,4 +51,4 @@ check {
         abortOnError false
         reportHTML new File(project.buildDir, 'reports/pmd/pmd.html')
     }
-}
+}*/

@@ -32,9 +32,13 @@ class CheckstyleCheck extends CommonCheck<CheckstyleConfig> {
 
         checkStyleTask.failOnViolation = false
         Path classpath = checkStyleTask.createClasspath()
-        rootProject.files().findAll { it.exists() }.each {
-            classpath.addFileset(project.ant.fileset(dir: it))
+        project.rootProject.buildscript.configurations.classpath.resolve().each {
+            classpath.createPathElement().location = it
         }
+        project.buildscript.configurations.classpath.resolve().each {
+            classpath.createPathElement().location = it
+        }
+
         config.getAndroidSources().findAll { it.exists() }.each {
             checkStyleTask.addFileset(project.ant.fileset(dir: it))
         }
