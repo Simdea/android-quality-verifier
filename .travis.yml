@@ -2,20 +2,6 @@ language: java
 language: android
 jdk: oraclejdk8
 
-before_cache:
-  # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
-  directories:
-    # Gradle dependencies
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
-    # Android build cache (see http://tools.android.com/tech-docs/build-cache)
-    - $HOME/.android/build-cache
-
 android:
   components:
     - tools
@@ -24,8 +10,8 @@ android:
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-google-android-support
-    - android-27
-    - sys-img-armeabi-v7a-android-27
+    - android-28
+    - sys-img-armeabi-v7a-android-28
 
 licenses:
   - 'android-sdk-preview-license-.+'
@@ -44,6 +30,8 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+    # Android build cache (see http://tools.android.com/tech-docs/build-cache)
+    - $HOME/.android/build-cache
 before_script:
   - |
       if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
