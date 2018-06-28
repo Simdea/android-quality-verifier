@@ -1,1 +1,1 @@
-include ':plugin', ':sample', ':verifier-annotations'
+include ':plugin', ':sample-java', ':verifier-annotations', ':sample-kotlin'
