@@ -122,7 +122,7 @@ Original work licensed under [MIT license][8].
 [11]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master
 [12]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev
 [13]: https://travis-ci.org/Simdea/android-quality-verifier
-[14]: https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg?version=3.5.9
-[15]: https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/3.5.9/link
+[14]: https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg
+[15]: https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/_latestVersion
 [16]: https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg
 [17]: https://www.gitcheese.com/donate/users/1757083/repos/87924699
