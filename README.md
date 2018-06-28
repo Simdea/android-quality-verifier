@@ -14,7 +14,7 @@ Build status
 
 Usage
 -----
-This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for [CheckStyle][3], `androidFindbugs` for [FindBugs][4], `CPDTask`  for [CPD][5] and `androidPmd` for [PMD][6].
+This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for [CheckStyle][3], `androidSpotbugs` for [SpotBugs][4], `CPDTask` for [CPD][5] and `androidPmd` for [PMD][6].
 
 Configuration
 -------------
@@ -37,10 +37,11 @@ buildscript {
 ##### add to app build.gradle:
 ```gradle
 apply plugin: 'pt.simdea.verifier'
-
+apply plugin: 'com.android.application'
+...
 dependencies {
     ...
-    classpath 'pt.simdea.verifier:verifier-annotations:0.0.3'
+    implementation 'pt.simdea.verifier:verifier-annotations:0.0.3'
     ...
 }
 
@@ -83,7 +84,7 @@ check {
   }
   
   // FindBugs configuration
-  findbugs {
+  spotbugs {
     // Same options as Checkstyle
   }
   
