@@ -1,16 +1,9 @@
 Android Quality Verifier
 ===============
-[![Download][14]][15] [![gitcheese.com][16]][17]
+[![Build Status][11]][13] [![Download][14]][15] [![gitcheese.com][16]][17]
 
 Static code analysis plugin for Android projects.
 This is a fork of [the original android-check plugin][1], which implements a really useful concept.
-
-Build status
-------------
-
-| Master   | [![Build Status][11]][13] |
-|----------|-------------|
-| **Dev** | [![dev][12]][13] |
 
 Usage
 -----
@@ -119,7 +112,7 @@ Original work licensed under [MIT license][8].
 [1]: https://github.com/stoyicker/android-check-2
 [2]: http://simdea.pt/
 [3]: http://checkstyle.sourceforge.net/
-[4]: http://findbugs.sourceforge.net/
+[4]: https://spotbugs.github.io
 [5]: https://pmd.github.io/pmd-5.7.0/usage/cpd-usage.html
 [6]: https://pmd.github.io/
 [7]: LICENSE.txt
