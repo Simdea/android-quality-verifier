@@ -21,17 +21,19 @@ class DetektCheck extends CommonCheck<DetektConfig> {
         def output = new File(project.buildDir, "reports/detekt/")
 
         def configFile = config.resolveConfigFileYml(taskCode)
-        inputs.files(project.fileTree(dir: "src", include: "**/*.kt"), configFile)
-        outputs.dir(output.toString())
-        description = 'Runs detekt.'
-        main = 'io.gitlab.arturbosch.detekt.cli.Main'
-        classpath = project.configurations.detektCheck
-        args = [
-                "--config", configFile,
-                "--input", project.file("."),
-                "--output", output
-        ]
-
+        javaexec {
+            main = 'io.gitlab.arturbosch.detekt.cli.Main'
+            inputs.files(project.fileTree(dir: "src", include: "**/*.kt"), configFile)
+            outputs.dir(output.toString())
+            description = taskDescription
+            classpath = project.configurations.detektCheck
+            args = [
+                    "--config", configFile,
+                    "--input", project.file("."),
+                    "--output", output
+            ]
+        }
+        //detektTask.perform(configFile, taskDescription, output)
     }
 
     @Override
