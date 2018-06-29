@@ -41,6 +41,7 @@ before_script:
         exit 1
       fi
 script:
+- ./gradlew plugin:publishToMavenLocal
   - ./gradlew clean assemble clean :plugin:check
 after_success:
   - |
