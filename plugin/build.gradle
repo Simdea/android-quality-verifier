@@ -28,6 +28,7 @@ dependencies {
     compile 'com.google.errorprone:error_prone_ant:2.3.1'
     ktlint "com.github.shyiko:ktlint:0.23.1"
     compile "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC7"
+    compile "org.eluder.coveralls:coveralls-maven-plugin:4.3.0"
 }
 
 project.ext {
