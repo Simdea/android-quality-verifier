@@ -7,4 +7,7 @@ class CpdConfig extends CommonConfig {
 
     CpdConfig(Project project) { super(project) }
 
+    int minimumTokenCount = 100
+    String language = 'java'
+
 }

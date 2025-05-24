@@ -4,25 +4,25 @@ import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.Formatter
 import com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask.FormatterType
 import groovy.util.slurpersupport.GPathResult
+import org.apache.tools.ant.types.Path
 import org.gradle.api.Project
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
-import pt.simdea.verifier.CommonConfig
 import pt.simdea.verifier.Utils
 
-class CheckstyleCheck extends CommonCheck {
+class CheckstyleCheck extends CommonCheck<CheckstyleConfig> {
 
     CheckstyleCheck() { super('checkstyle', 'androidCheckstyle', 'Runs Android Checkstyle') }
 
     @Override
-    protected CommonConfig getConfig(CheckExtension extension) { return extension.checkstyle }
+    protected CheckstyleConfig getConfig(CheckExtension extension) { return extension.checkstyle }
 
     @Override
-    protected void performCheck(Project project, List<File> sources, File configFile, File xmlReportFile) {
+    void run(Project project, Project rootProject, CheckstyleConfig config) {
         CheckstyleAntTask checkStyleTask = new CheckstyleAntTask()
 
         checkStyleTask.project = project.ant.antProject
-        checkStyleTask.config = configFile.toURI().toURL()
+        checkStyleTask.config = config.resolveConfigFile(taskCode).toURI().toURL()
         checkStyleTask.addFormatter(new Formatter(type: new FormatterType(value: 'xml'), tofile: xmlReportFile))
         File file = new File(project.buildDir, "tmp/android-check/checkstyle-suppress.xml")
         file.parentFile.mkdirs()
@@ -31,8 +31,15 @@ class CheckstyleCheck extends CommonCheck {
         checkStyleTask.properties = file
 
         checkStyleTask.failOnViolation = false
+        Path classpath = checkStyleTask.createClasspath()
+        project.rootProject.buildscript.configurations.classpath.resolve().each {
+            classpath.createPathElement().location = it
+        }
+        project.buildscript.configurations.classpath.resolve().each {
+            classpath.createPathElement().location = it
+        }
 
-        sources.findAll { it.exists() }.each {
+        config.getAndroidSources().findAll { it.exists() }.each {
             checkStyleTask.addFileset(project.ant.fileset(dir: it))
         }
 
@@ -43,6 +50,16 @@ class CheckstyleCheck extends CommonCheck {
     protected int getErrorCount(File xmlReportFile) {
         GPathResult xml = new XmlSlurper().parseText(xmlReportFile.text)
         return xml.file.inject(0) { count, file -> count + file.error.size() }
+    }
+
+    @Override
+    protected boolean isSupported(Project project) {
+        return Utils.isJavaProject(project) || Utils.isAndroidProject(project)
+    }
+
+    @Override
+    protected boolean isTask() {
+        return true
     }
 
     @Override

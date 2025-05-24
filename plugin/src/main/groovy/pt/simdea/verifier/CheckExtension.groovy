@@ -4,8 +4,11 @@ import org.gradle.api.Action
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleConfig
 import pt.simdea.verifier.cpd.CpdConfig
-import pt.simdea.verifier.findbugs.FindbugsConfig
+import pt.simdea.verifier.detekt.DetektConfig
+import pt.simdea.verifier.ktlint.KtLintConfig
+import pt.simdea.verifier.lint.LintConfig
 import pt.simdea.verifier.pmd.PmdConfig
+import pt.simdea.verifier.spotbugs.SpotBugsConfig
 
 class CheckExtension {
 
@@ -17,13 +20,9 @@ class CheckExtension {
 
     void checkstyle(Action<CheckstyleConfig> action) { action.execute(checkstyle) }
 
-    FindbugsConfig findbugs
+    SpotBugsConfig spotbugs
 
-    void findbugs(Action<FindbugsConfig> action) { action.execute(findbugs) }
-
-    //SpotbugsConfig spotbugs
-
-    //void spotbugs(Action<SpotbugsConfig> action) { action.execute(spotbugs) }
+    void spotbugs(Action<SpotBugsConfig> action) { action.execute(spotbugs) }
 
     PmdConfig pmd
 
@@ -33,13 +32,32 @@ class CheckExtension {
 
     void cpd(Action<CpdConfig> action) { action.execute(cpd) }
 
+    LintConfig lint
+
+    void lint(Action<LintConfig> action) { action.execute(lint) }
+
+    KtLintConfig ktLint
+
+    void ktLint(Action<KtLintConfig> action) { action.execute(ktLint) }
+
+    DetektConfig detekt
+
+    void detekt(Action<DetektConfig> action) { action.execute(detekt) }
+
+    //ErrorProneConfig errorProne
+
+    //void errorProne(Action<ErrorProneConfig> action) { action.execute(errorProne) }
+
     CheckExtension(Project project) {
         this.project = project
-        this.checkstyle = new CheckstyleConfig(project)
-        this.findbugs = new FindbugsConfig(project)
-        //this.spotbugs = new SpotbugsConfig(project)
-        this.pmd = new PmdConfig(project)
-        this.cpd = new CpdConfig(project)
+        checkstyle = new CheckstyleConfig(project)
+        spotbugs = new SpotBugsConfig(project)
+        pmd = new PmdConfig(project)
+        cpd = new CpdConfig(project)
+        lint = new LintConfig(project)
+        ktLint = new KtLintConfig(project)
+        detekt = new DetektConfig(project)
+        //errorProne = new ErrorProneConfig(project)
     }
 
     boolean skip = false
@@ -49,29 +67,5 @@ class CheckExtension {
     boolean abortOnError = true
 
     void abortOnError(boolean abortOnError) { this.abortOnError = abortOnError }
-
-    static class Lint {
-        boolean absolutePaths
-
-        boolean checkAllWarnings
-
-        Set<String> disable
-
-        boolean checkReleaseBuilds
-
-        File reportHTML
-
-        boolean ignoreWarnings
-
-        File config
-
-        boolean showAll
-
-        boolean warningsAsErrors
-
-        File reportXML
-
-        boolean skip
-    }
 
 }

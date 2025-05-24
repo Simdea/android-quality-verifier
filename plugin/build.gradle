@@ -2,25 +2,33 @@ apply plugin: 'groovy'
 
 repositories { jcenter() }
 
+configurations {
+    ktlint
+    detektCheck
+}
+
 dependencies {
     compileOnly gradleApi()
 
     // Checkstyle
-    implementation('com.puppycrawl.tools:checkstyle:8.7') {
+    compile('com.puppycrawl.tools:checkstyle:8.10.1') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
     // FindBugs
-    implementation 'com.google.code.findbugs:findbugs:3.0.1'
+    //implementation 'com.google.code.findbugs:findbugs:3.0.1'
     // SpotBugs
-    //compile 'com.github.spotbugs:spotbugs:3.1.1'
-    //compile 'com.github.spotbugs:spotbugs-ant:3.1.1'
-    //compile 'com.github.spotbugs:spotbugs-annotations:3.1.1'
-    //compile 'com.github.spotbugs:spotbugs-archetype:0.1.0'
+    compile 'com.github.spotbugs:spotbugs:3.1.5'
+    compile 'com.github.spotbugs:spotbugs-ant:3.1.5'
+    compile 'com.github.spotbugs:spotbugs-annotations:3.1.5'
     // PMD
-    implementation 'net.sourceforge.pmd:pmd-java:6.0.1'
+    compile 'net.sourceforge.pmd:pmd-core:6.4.0'
+    compile 'net.sourceforge.pmd:pmd-java:6.4.0'
     // Error Prone
-    implementation 'com.google.errorprone:error_prone_ant:2.1.1'
+    compile 'com.google.errorprone:error_prone_ant:2.3.1'
+    ktlint "com.github.shyiko:ktlint:0.23.1"
+    compile "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC7"
+    compile "org.eluder.coveralls:coveralls-maven-plugin:4.3.0"
 }
 
 project.ext {
@@ -29,10 +37,10 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.6.0"
+    version = "4.0.0-alpha1"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
-    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'quality']
+    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'ktlint', 'detekt', 'error prone', 'quality']
     pom = {
         licenses {
             license {
