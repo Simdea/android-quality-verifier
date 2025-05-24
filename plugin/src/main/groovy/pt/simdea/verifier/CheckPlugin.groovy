@@ -4,7 +4,9 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import pt.simdea.verifier.checkstyle.CheckstyleCheck
 import pt.simdea.verifier.cpd.CpdCheck
+import pt.simdea.verifier.detekt.DetektCheck
 import pt.simdea.verifier.findbugs.FindbugsCheck
+import pt.simdea.verifier.ktlint.KtlintCheck
 import pt.simdea.verifier.pmd.PmdCheck
 
 class CheckPlugin implements Plugin<Project> {
@@ -31,6 +33,8 @@ class CheckPlugin implements Plugin<Project> {
             }
         }
         new CheckstyleCheck().apply(target)
+        new DetektCheck().apply(target)
+        new KtlintCheck().apply(target)
     }
 
     static boolean addLint(final Project subProject, final CheckExtension extension) {

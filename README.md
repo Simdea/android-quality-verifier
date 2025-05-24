@@ -2,7 +2,7 @@ Android Quality Verifier
 ===============
 [![Download][14]][15] [![gitcheese.com][16]][17]
 
-Static code analysis plugin for Android projects.
+Static code analysis plugin for Android and Kotlin projects.
 This is a fork of [the original android-check plugin][1], which implements a really useful concept.
 
 Build status
@@ -12,9 +12,32 @@ Build status
 |----------|-------------|
 | **Dev** | [![dev][12]][13] |
 
+Supported Tools
+---------------
+The plugin integrates the following static analysis tools:
+
+*   **Checkstyle:** (v10.12.7) For Java code style checking.
+*   **PMD:** (v6.55.0) For identifying potential bugs, dead code, suboptimal code, etc., in Java.
+*   **SpotBugs:** (v4.8.3) Successor to FindBugs, for static bytecode analysis to find bugs in Java code. (Replaces FindBugs).
+*   **CPD:** (Part of PMD) For finding duplicated code in Java.
+*   **Detekt:** (v1.23.6) Static analysis for Kotlin code, focusing on code smells, complexity, and style issues.
+*   **Ktlint:** (v0.50.0 tool, v12.1.0 Gradle plugin) An anti-bikeshedding Kotlin linter with built-in formatter.
+*   **ErrorProne:** (v2.26.1) Catches common Java programming mistakes at compile-time (via plugin dependency).
+*   **Android Lint:** Integrated via the Android Gradle Plugin.
+
 Usage
 -----
-This plugin is available in jCenter. It attaches itself to the `check` task if it finds it (that is, you don't use the `plugins` block and you apply either the application or library Android plugins first) - otherwise you'll need to execute the corresponding tasks manually when desired: `androidCheckstyle` for [CheckStyle][3], `androidFindbugs` for [FindBugs][4], `CPDTask`  for [CPD][5] and `androidPmd` for [PMD][6].
+This plugin is available in jCenter. It attaches its verification tasks to the standard `check` task. If the `check` task is present (e.g., by applying the `java` or Android plugins), the analysis tools will run automatically when you execute `./gradlew check`.
+
+Alternatively, you can execute the specific tasks for each tool:
+*   `runCheckstyle` for Checkstyle
+*   `runSpotbugs` for SpotBugs (formerly `runFindbugs`)
+*   `runPmd` for PMD
+*   `runCpd` for CPD
+*   `runDetekt` for Detekt (Kotlin)
+*   `runKtlint` for Ktlint (Kotlin)
+
+The plugin also configures Android Lint if an Android plugin is applied.
 
 Configuration
 -------------
@@ -27,7 +50,7 @@ buildscript {
     ...
     dependencies {
         ...
-        classpath 'pt.simdea.verifier:verifier:3.6.0'
+        classpath 'pt.simdea.verifier:verifier:3.7.0' // TODO: Update with the actual new version
         ...
     }
     ...
@@ -75,14 +98,65 @@ check {
     // Same options as Checkstyle
   }
   
-  // FindBugs configuration
-  findbugs {
-    // Same options as Checkstyle
+  // SpotBugs configuration (replaces FindBugs)
+  spotbugs {
+    // Completely skip SpotBugs, default: false
+    skip true/false
+
+    // Fails build if SpotBugs rule violation is found, default: false
+    abortOnError true/false
+
+    // Configuration file for SpotBugs (e.g., exclude filter), default: <project_path>/config/spotbugs.xml (or findbugs.xml for backward compatibility), if non-existent then plugin/src/main/resources/findbugs/conf-default.xml
+    config 'path/to/spotbugs-exclude.xml'
+
+    // Output file for XML reports, default: new File(project.buildDir, 'outputs/spotbugs/spotbugs.xml')
+    reportXML new File(project.buildDir, 'path/where/you/want/spotbugs.xml')
+
+    // Output file for HTML reports, default: not generated
+    reportHTML new File(project.buildDir, 'path/where/you/want/spotbugs.html')
   }
-  
+
   // PMD configuration
   pmd {
-    // Same options as Checkstyle
+    // Same options as Checkstyle (refer to Checkstyle section for available options like skip, abortOnError, config, reportXML, reportHTML)
+  }
+
+  // Detekt configuration (for Kotlin)
+  detekt {
+    // Completely skip Detekt, default: false
+    skip true/false
+
+    // Fails build if Detekt rule violation is found, default: false
+    abortOnError true/false
+
+    // Configuration file for Detekt, default: <project_path>/detekt-config.yml or <module_path>/detekt-config.yml, if non-existent then plugin/src/main/resources/detekt/conf-default.yml
+    config 'path/to/detekt-config.yml'
+
+    // Output file for XML reports, default: new File(project.buildDir, 'outputs/detekt/detekt.xml')
+    reportXML new File(project.buildDir, 'path/where/you/want/detekt.xml')
+
+    // Output file for HTML reports, default: new File(project.buildDir, 'outputs/detekt/detekt.html')
+    reportHTML new File(project.buildDir, 'path/where/you/want/detekt.html')
+  }
+
+  // Ktlint configuration (for Kotlin)
+  ktlint {
+    // Completely skip Ktlint, default: false
+    skip true/false
+
+    // Fails build if Ktlint rule violation is found, default: false
+    abortOnError true/false
+
+    // Ktlint uses .editorconfig for rules. The plugin typically picks up .editorconfig from the project root.
+    // The 'config' property here is for consistency but Ktlint itself doesn't use a single XML config file like Checkstyle.
+    // If you have a specific .editorconfig and want to ensure it's recognized (though usually automatic):
+    // config 'path/to/.editorconfig' // This is more a pointer to your .editorconfig if not at root.
+
+    // Output file for XML (checkstyle format) reports, default: new File(project.buildDir, 'outputs/ktlint/ktlint-checkstyle-report.xml')
+    reportXML new File(project.buildDir, 'path/where/you/want/ktlint-checkstyle.xml')
+
+    // Output file for HTML reports, default: new File(project.buildDir, 'outputs/ktlint/ktlint-html-report.html')
+    reportHTML new File(project.buildDir, 'path/where/you/want/ktlint.html')
   }
   
   // Lint configuration
@@ -121,7 +195,11 @@ Original work licensed under [MIT license][8].
 [11]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=master
 [12]: https://travis-ci.org/Simdea/android-quality-verifier.svg?branch=dev
 [13]: https://travis-ci.org/Simdea/android-quality-verifier
-[14]: https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg?version=3.5.9
-[15]: https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/3.5.9/link
+[14]: https://api.bintray.com/packages/simdea/android-quality-verifier/pt.simdea.verifier/images/download.svg?version=3.7.0 
+[15]: https://bintray.com/simdea/android-quality-verifier/pt.simdea.verifier/3.7.0/link // TODO: Update with the actual new version URL
 [16]: https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg
 [17]: https://www.gitcheese.com/donate/users/1757083/repos/87924699
+
+[SpotBugs]: https://spotbugs.github.io/
+[Detekt]: https://detekt.dev/
+[Ktlint]: https://ktlint.github.io/
