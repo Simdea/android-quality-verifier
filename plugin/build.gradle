@@ -2,6 +2,11 @@ apply plugin: 'groovy'
 
 repositories { jcenter() }
 
+configurations {
+    ktlint
+    detektCheck
+}
+
 dependencies {
     compileOnly gradleApi()
 
@@ -12,8 +17,11 @@ dependencies {
     }
     // SpotBugs (replaces FindBugs)
     implementation 'com.github.spotbugs:spotbugs:4.8.3'
+    implementation 'com.github.spotbugs:spotbugs-ant:4.8.3'
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.8.3'
     // PMD
     implementation 'net.sourceforge.pmd:pmd-java:6.55.0'
+    implementation 'net.sourceforge.pmd:pmd-core:6.55.0'
     // Error Prone
     implementation 'com.google.errorprone:error_prone_ant:2.26.1'
     // Detekt
@@ -28,10 +36,10 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.6.0"
+    version = "4.0.0-alpha1"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
-    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'quality']
+    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'ktlint', 'detekt', 'error prone', 'quality']
     pom = {
         licenses {
             license {

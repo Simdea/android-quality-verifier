@@ -1,32 +1,19 @@
-# Default Detekt configuration
-# See https://detekt.dev/docs/rules/style for available rules and configuration options.
+failFast: true
 
-# You can activate or deactivate rule sets, configure rule properties,
-# and define build failure thresholds here.
+potential-bugs:
+  UnsafeCast:
+    active: false # We know what we're doing.
+  LateinitUsage:
+    active: false # We know what we're doing.
 
-# Example:
-# style:
-#   MaxLineLength:
-#     active: true
-#     maxLineLength: 120
-#   MagicNumber:
-#     active: false
+style:
+  TopLevelPropertyNaming:
+    active: false
+  MaxLineLength:
+    active: false
 
-# For a starting point, you might want to enable a few rule sets:
-# style:
-#   active: true
-# comments:
-#   active: true
-# empty-blocks:
-#   active: true
-# exceptions:
-#   active: true
-# naming:
-#   active: true
-# performance:
-#   active: true
-# potential-bugs:
-#   active: true
-
-# Ensure to check the Detekt documentation for the latest configuration options.
-# This file can be overridden by providing a custom detekt-config.yml in the project.
+comments:
+  UndocumentedPublicClass:
+    active: false
+  UndocumentedPublicFunction:
+    active: false

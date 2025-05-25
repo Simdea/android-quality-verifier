@@ -7,18 +7,20 @@ import pt.simdea.verifier.cpd.CpdCheck
 import pt.simdea.verifier.detekt.DetektCheck
 import pt.simdea.verifier.findbugs.FindbugsCheck
 import pt.simdea.verifier.ktlint.KtlintCheck
+import pt.simdea.verifier.lint.LintCheck
 import pt.simdea.verifier.pmd.PmdCheck
+import pt.simdea.verifier.spotbugs.SpotBugsCheck
 
 class CheckPlugin implements Plugin<Project> {
 
     @Override
-    void apply(Project target) {
-        target.extensions.create(CheckExtension.NAME, CheckExtension, target)
-        target.check.extensions.create('lint', CheckExtension.Lint)
+    void apply(Project rootProject) {
+        rootProject.extensions.create(CheckExtension.NAME, CheckExtension, rootProject)
+        rootProject.repositories.add(rootProject.getRepositories().jcenter())
+        //.dependencies.add("implementation", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
+        //rootProject.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
 
-        target.repositories.add(target.getRepositories().jcenter())
-        target.dependencies.add("api", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
-        target.dependencies.add("annotationProcessor", "pt.simdea.verifier.annotations:verifier-annotations:0.0.3")
+        def hasSubProjects = rootProject.subprojects.size() > 0
 
         new FindbugsCheck().apply(target)
         //new SpotbugsCheck().apply(target)
@@ -59,33 +61,22 @@ class CheckPlugin implements Plugin<Project> {
                     htmlOutput extension.lint.reportHTML
                 }
             }
-
-            if (extension.lint.reportXML != null) {
-                subProject.android.lintOptions {
-                    xmlReport true
-                    xmlOutput extension.lint.reportXML
-                }
+        } else {
+            rootProject.afterEvaluate {
+                addTool(rootProject, rootProject)
             }
-
-            subProject.check.dependsOn 'lint'
-
-            return true
         }
-
-        return false
     }
 
-    static File resolveConfigFile(String code, Project project) {
-        File file = new File(project.buildDir, "tmp/android-check/${code}.xml")
-        file.parentFile.mkdirs()
-        file.delete()
-        file << Utils.getResource(project, "$code/conf-default.xml")
-        return file
+    private static void addTool(final Project project, final Project rootProject) {
+        new PmdCheck().apply(project, rootProject)
+        new CheckstyleCheck().apply(project, rootProject)
+        new KtLintCheck().apply(project, rootProject)
+        new CpdCheck().apply(project, rootProject)
+        new DetektCheck().apply(project, rootProject)
+        //new ErrorProneCheck().apply(project, rootProject)
+        new LintCheck().apply(project, rootProject)
+        new SpotBugsCheck().apply(project, rootProject)
     }
 
-    protected static boolean isAndroidProject(final Project project) {
-        final boolean isAndroidLibrary = project.plugins.hasPlugin('com.android.library')
-        final boolean isAndroidApp = project.plugins.hasPlugin('com.android.application')
-        return isAndroidLibrary || isAndroidApp
-    }
 }
