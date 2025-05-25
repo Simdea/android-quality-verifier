@@ -57,6 +57,10 @@ class CommonConfig {
         return skip == null ? defaultSkip : skip
     }
 
+    boolean shouldResolveErrors() {
+        return true
+    }
+
     boolean resolveAbortOnError(boolean defaultAbortOnError) {
         return abortOnError == null ? defaultAbortOnError : abortOnError
     }
@@ -82,11 +86,40 @@ class CommonConfig {
         return Utils.getResource(project, "$code/conf-default.xml")
     }
 
+    private String resolveConfigYml(String code) {
+        if (configResource) {
+            return configResource.asString()
+        }
+        if (configFile) {
+            return configFile.text
+        }
+
+        File file = project.file("config/${code}.yml")
+        if (file.exists()) {
+            return file.text
+        }
+
+        File rootFile = project.rootProject.file("config/${code}.yml")
+        if (rootFile.exists()) {
+            return rootFile.text
+        }
+
+        return Utils.getResource(project, "$code/conf-default.yml")
+    }
+
     File resolveConfigFile(String code) {
         File file = new File(project.buildDir, "tmp/quality/${code}.xml")
         file.parentFile.mkdirs()
         file.delete()
         file << resolveConfig(code)
+        return file
+    }
+
+    File resolveConfigFileYml(String code) {
+        File file = new File(project.buildDir, "tmp/quality/${code}.yml")
+        file.parentFile.mkdirs()
+        file.delete()
+        file << resolveConfigYml(code)
         return file
     }
 
@@ -107,7 +140,9 @@ class CommonConfig {
             return reportFile
         }
 
-        return new File(project.buildDir, "outputs/${code}/${code}.${extension}")
+        File file = new File(project.buildDir, "outputs/${code}/${code}.${extension}")
+        file.parentFile.mkdirs()
+        return file
     }
 
     File resolveXmlReportFile(String code) {

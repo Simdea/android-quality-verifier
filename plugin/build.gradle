@@ -6,21 +6,23 @@ dependencies {
     compileOnly gradleApi()
 
     // Checkstyle
-    implementation('com.puppycrawl.tools:checkstyle:8.7') {
+    implementation('com.puppycrawl.tools:checkstyle:10.12.7') {
         // Android Lint also depends on guava, so don't bring it in twice
         exclude module: 'guava'
     }
-    // FindBugs
-    implementation 'com.google.code.findbugs:findbugs:3.0.1'
-    // SpotBugs
-    //compile 'com.github.spotbugs:spotbugs:3.1.1'
-    //compile 'com.github.spotbugs:spotbugs-ant:3.1.1'
-    //compile 'com.github.spotbugs:spotbugs-annotations:3.1.1'
-    //compile 'com.github.spotbugs:spotbugs-archetype:0.1.0'
+    // SpotBugs (replaces FindBugs)
+    implementation 'com.github.spotbugs:spotbugs:4.8.3'
+    implementation 'com.github.spotbugs:spotbugs-ant:4.8.3'
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.8.3'
     // PMD
-    implementation 'net.sourceforge.pmd:pmd-java:6.0.1'
+    implementation 'net.sourceforge.pmd:pmd-java:6.55.0'
+    implementation 'net.sourceforge.pmd:pmd-core:6.55.0'
     // Error Prone
-    implementation 'com.google.errorprone:error_prone_ant:2.1.1'
+    implementation 'com.google.errorprone:error_prone_ant:2.26.1'
+    // Detekt
+    implementation 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.6'
+    // Ktlint
+    implementation 'org.jlleitschuh.gradle:ktlint-gradle:12.1.0'
 }
 
 project.ext {
@@ -29,10 +31,10 @@ project.ext {
     description = 'Static code analysis plugin for Android projects.'
     groupId = 'pt.simdea.verifier'
     artifactId = 'verifier'
-    version = "3.6.0"
+    version = "4.0.0-alpha1"
     website = 'https://github.com/simdea/android-quality-verifier'
     scm = 'https://github.com/simdea/android-quality-verifier'
-    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'quality']
+    tags = ['android', 'verifier', 'check', 'checkstyle', 'spotbugs', 'pmd', 'lint', 'ktlint', 'detekt', 'error prone', 'quality']
     pom = {
         licenses {
             license {
