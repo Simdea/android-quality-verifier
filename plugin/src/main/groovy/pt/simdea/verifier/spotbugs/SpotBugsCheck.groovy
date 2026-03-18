@@ -82,7 +82,7 @@ class SpotBugsCheck extends CommonCheck<SpotBugsConfig> {
 
     @Override
     protected String getErrorMessage(int errorCount, File htmlReportFile) {
-        return "$errorCount FindBugs rule violations were found. See the report at: ${htmlReportFile.toURI()}"
+        return "$errorCount SpotBugs rule violations were found. See the report at: ${htmlReportFile.toURI()}"
     }
 
 }

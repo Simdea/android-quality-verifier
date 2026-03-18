@@ -26,7 +26,7 @@ class DetektCheck extends CommonCheck<DetektConfig> {
     }
 
     @Override
-    protected void run(Project project, Project rootProject, DetektConfig config, String variantName) {
+    protected void run(Project project, Project rootProject, DetektConfig config) {
         // Apply the Detekt plugin
         if (!project.getPlugins().hasPlugin(DETEKT_PLUGIN_ID)) {
             project.apply plugin: DETEKT_PLUGIN_ID
