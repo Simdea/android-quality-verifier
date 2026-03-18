@@ -33,18 +33,18 @@ class LintCheck extends CommonCheck<LintConfig> {
         // This task should run after the standard Android 'lint' task has generated its reports.
         // The specific variant lint task (e.g., 'lintDebug') is what generates the report.
         // 'lint' is the lifecycle task that runs all variant lint tasks.
-        return ['lint'] as Set 
+        return ['lint'] as Set
     }
 
     @Override
     protected boolean isSupported(Project project) {
         return Utils.isAndroidProject(project)
     }
-    
+
     @Override
     protected boolean isTask() {
         // This class configures AGP's lint, but the error checking is part of the task CommonCheck creates.
-        return true 
+        return true
     }
 
     @Override
@@ -53,7 +53,7 @@ class LintCheck extends CommonCheck<LintConfig> {
         // The actual Lint execution is done by AGP's 'lint' task (e.g., 'lintDebug', 'lintRelease').
         // CommonCheck's 'apply' method makes this 'androidLint' task depend on 'lint'.
         // So, when 'androidLint' runs, 'lint' should have already completed and generated reports.
-        
+
         if (!Utils.isAndroidProject(project)) {
             project.logger.info("Project ${project.name} is not an Android project. Skipping Lint configuration by Verifier.")
             return
@@ -64,19 +64,19 @@ class LintCheck extends CommonCheck<LintConfig> {
             // CommonCheck's abortOnError is for the verifier task, not AGP's lint task directly.
             // We let AGP's lint run, then CommonCheck decides to fail the build.
             abortOnError = config.abortOnError ?: false // Let AGP lint run, verifier will check errors
-            
+
             // Use the values from LintConfig, providing defaults if they are null in the config.
             // The defaults here should match Android Gradle Plugin's defaults or sensible ones.
             absolutePaths = config.absolutePaths // LintConfig defaults to true
             checkAllWarnings = config.checkAllWarnings // LintConfig defaults to false
-            
+
             if (config.disable != null && !config.disable.isEmpty()) {
                 disable.clear() // Clear any existing direct AGP config
                 disable.addAll(config.disable)
             }
-            
+
             checkReleaseBuilds = config.checkReleaseBuilds // LintConfig defaults to true
-            
+
             // this.configFile is resolved by CommonCheck.apply() via LintConfig.resolveConfigFile()
             // which prioritizes LintConfig.lintConfig property.
             if (this.configFile != null && this.configFile.exists()) {
@@ -84,7 +84,7 @@ class LintCheck extends CommonCheck<LintConfig> {
             } else if (config.lintConfig != null) { // If lintConfig property was set but file didn't exist
                 project.logger.warn("Custom lintConfig file not found: ${config.lintConfig.absolutePath}. Lint will use its defaults or embedded config.")
             }
-            
+
             ignoreWarnings = config.ignoreWarnings // LintConfig defaults to false
             showAll = config.showAll // LintConfig defaults to false
             warningsAsErrors = config.warningsAsErrors // LintConfig defaults to false
@@ -94,7 +94,7 @@ class LintCheck extends CommonCheck<LintConfig> {
             htmlOutput = project.file(this.htmlReportFile.absolutePath)
             xmlReport = true // Ensure XML report is enabled
             htmlReport = true // Ensure HTML report is enabled
-            
+
             // textReport = false // Optionally disable text report
             // textOutput = project.file("lint-results.txt") // Or configure its output
         }

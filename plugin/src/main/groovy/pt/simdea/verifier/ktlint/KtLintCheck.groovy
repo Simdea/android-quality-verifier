@@ -3,6 +3,7 @@ package pt.simdea.verifier.ktlint
 import groovy.xml.XmlParser
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.tasks.JavaExec
 import pt.simdea.verifier.CheckExtension
 import pt.simdea.verifier.CommonCheck
 import pt.simdea.verifier.Utils
@@ -18,8 +19,8 @@ class KtLintCheck extends CommonCheck<KtLintConfig> {
     private static final String KTLINT_TOOL_VERSION = '0.50.0'
 
     KtLintCheck() {
+        super('ktlint', 'androidKtlint', 'Android Kotlin Lint')
         // taskCode, taskName (for CommonCheck's created task), taskDescription
-        super('ktlint', 'androidKtlint', 'Run Ktlint source code style analysis for Kotlin.')
         // Ktlint primarily uses .editorconfig, so a specific config file for rules isn't typical like Checkstyle/PMD.
         // CommonCheck handles configFile resolution, but for Ktlint, it's less critical if .editorconfig is at root.
         // We still provide a conventional name for CommonCheck's structure.
@@ -43,7 +44,7 @@ class KtLintCheck extends CommonCheck<KtLintConfig> {
             version.set(KTLINT_TOOL_VERSION)
             android.set(Utils.isAndroidProject(project)) // Enable Android mode for Android projects
             ignoreFailures.set(true) // Verifier plugin will handle build failure based on error count
-            
+
             // Configure reporters globally for the extension if possible,
             // otherwise, this might need to be on individual tasks.
             // For recent versions of the plugin, reporters are configured this way.
@@ -71,7 +72,7 @@ class KtLintCheck extends CommonCheck<KtLintConfig> {
             // which might be acceptable if we only care about 'main' sources primarily.
             // A more robust solution would involve custom aggregation if multiple source sets are checked
             // and their reports need to be distinct yet funneled through CommonCheck's single file mechanism.
-            
+
             // This might not work as expected if the plugin doesn't allow overriding output paths this way for all reporters.
             // The plugin typically creates reports in its own directory structure.
             // Let's try to ensure the main aggregate task `ktlintCheck` has its reports configured.
@@ -92,7 +93,7 @@ class KtLintCheck extends CommonCheck<KtLintConfig> {
                  task.getReports().getByName("html").getOutputLocation().set(project.layout.buildDirectory.file("reports/ktlint/${task.getName()}/ktlint.html"))
             }
         }
-        
+
         project.getLogger().lifecycle("Ktlint configured. The '${KTLINT_CHECK_TASK_NAME}' task should run as part of the build lifecycle.")
         // The CommonCheck framework should ensure that KTLINT_CHECK_TASK_NAME (or rather, the task `androidKtlint`
         // which calls this run method) depends on the necessary Ktlint tasks from the plugin.

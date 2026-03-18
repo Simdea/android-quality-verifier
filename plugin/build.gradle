@@ -2,6 +2,11 @@ apply plugin: 'groovy'
 
 repositories { jcenter() }
 
+configurations {
+    ktlint
+    detektCheck
+}
+
 dependencies {
     compileOnly gradleApi()
 

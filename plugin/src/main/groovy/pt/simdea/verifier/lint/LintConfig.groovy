@@ -16,10 +16,10 @@ class LintConfig extends CommonConfig {
     boolean warningsAsErrors = false
     // Add any other lintOptions properties you want to make configurable
 
-    LintConfig(Project project) { 
+    LintConfig(Project project) {
         super(project)
         // Default config file name for Lint (used by CommonConfig.resolveConfigFile if lintConfig is null)
-        this.defaultConfigFile = "lint.xml" 
+        this.defaultConfigFile = "lint.xml"
     }
 
     @Override
